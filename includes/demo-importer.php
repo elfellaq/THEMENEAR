@@ -281,9 +281,20 @@ class Travelio_Demo_Importer {
     
     public function render_admin_page() {
         if (isset($_GET['imported'])) {
-            $imported = json_decode(stripslashes($_GET['imported']), true);
+            $imported_data = isset($_GET['imported']) ? stripslashes($_GET['imported']) : '';
+            $imported = !empty($imported_data) ? json_decode($imported_data, true) : null;
+            
             echo '<div class="notice notice-success"><p><strong>Demo content imported successfully!</strong></p>';
-            echo '<p>Tours: ' . intval($imported['tours']) . ' | Destinations: ' . intval($imported['destinations']) . ' | Pages: ' . intval($imported['pages']) . '</p>';
+            
+            if ($imported && is_array($imported)) {
+                $tours = isset($imported['tours']) ? intval($imported['tours']) : 0;
+                $destinations = isset($imported['destinations']) ? intval($imported['destinations']) : 0;
+                $pages = isset($imported['pages']) ? intval($imported['pages']) : 0;
+                echo '<p>Tours: ' . $tours . ' | Destinations: ' . $destinations . ' | Pages: ' . $pages . '</p>';
+            } else {
+                echo '<p>Import completed. Please check your content in Trips or Tour Packages.</p>';
+            }
+            
             echo '<p><a href="' . home_url() . '" target="_blank" class="button button-primary">View Your Site</a></p></div>';
         }
         ?>
@@ -356,18 +367,24 @@ class Travelio_Demo_Importer {
         );
         
         // Check if WP Travel Engine is active
-        $wte_active = class_exists('WPTrip_Summary');
+        $wte_active = class_exists('WPTrip_Summary') || class_exists('Wp_Travel_Engine');
         
         // Import Destinations
         if (post_type_exists('destination')) {
             $imported['destinations'] = $this->import_destinations();
         }
         
-        // Import Tours
+        // Import Tours - try multiple post types
         if ($wte_active && post_type_exists('trip')) {
             $imported['tours'] = $this->import_tours_wte();
         } elseif (post_type_exists('tour_package')) {
             $imported['tours'] = $this->import_tours_custom();
+        } else {
+            // Fallback: create with custom post type registration
+            if ($wte_active) {
+                // WTE is active but trip post type not registered yet - force it
+                $imported['tours'] = $this->import_tours_wte();
+            }
         }
         
         // Import Pages
@@ -413,29 +430,40 @@ class Travelio_Demo_Importer {
         $count = 0;
         
         foreach ($this->sample_tours as $tour) {
-            // Check if already exists
+            // Check if already exists - check both trip and tour_package
             $exists = get_page_by_path($tour['slug'], OBJECT, 'trip');
+            if (!$exists) {
+                $exists = get_page_by_path($tour['slug'], OBJECT, 'tour_package');
+            }
             if ($exists) {
                 continue;
             }
+            
+            // Determine post type to use
+            $post_type = post_type_exists('trip') ? 'trip' : 'tour_package';
             
             $post_id = wp_insert_post(array(
                 'post_title' => $tour['title'],
                 'post_name' => $tour['slug'],
                 'post_content' => $this->format_tour_content($tour),
                 'post_status' => 'publish',
-                'post_type' => 'trip'
+                'post_type' => $post_type
             ));
             
             if ($post_id && !is_wp_error($post_id)) {
                 // Set featured image
                 $this->set_featured_image($post_id, $tour['image']);
                 
-                // Set WTE meta fields
+                // Set WTE meta fields (use wpte_ prefix for WP Travel Engine)
                 update_post_meta($post_id, 'wpte_trip_duration', $tour['duration']);
                 update_post_meta($post_id, 'wpte_trip_price', $tour['sale_price']);
                 update_post_meta($post_id, 'wpte_trip_original_price', $tour['price']);
                 update_post_meta($post_id, 'wpte_trip_availability', 'available');
+                
+                // Also set alternative meta keys for compatibility
+                update_post_meta($post_id, 'trip_duration', $tour['duration']);
+                update_post_meta($post_id, 'trip_price', $tour['sale_price']);
+                update_post_meta($post_id, 'original_price', $tour['price']);
                 
                 // Add gallery
                 if (!empty($tour['gallery'])) {
@@ -448,6 +476,7 @@ class Travelio_Demo_Importer {
                     }
                     if (!empty($gallery_ids)) {
                         update_post_meta($post_id, 'wpte_trip_gallery', $gallery_ids);
+                        update_post_meta($post_id, 'trip_gallery', $gallery_ids);
                     }
                 }
                 
@@ -462,30 +491,42 @@ class Travelio_Demo_Importer {
         $count = 0;
         
         foreach ($this->sample_tours as $tour) {
-            // Check if already exists
+            // Check if already exists - check both tour_package and trip
             $exists = get_page_by_path($tour['slug'], OBJECT, 'tour_package');
+            if (!$exists) {
+                $exists = get_page_by_path($tour['slug'], OBJECT, 'trip');
+            }
             if ($exists) {
                 continue;
             }
+            
+            // Determine post type to use
+            $post_type = post_type_exists('tour_package') ? 'tour_package' : 'trip';
             
             $post_id = wp_insert_post(array(
                 'post_title' => $tour['title'],
                 'post_name' => $tour['slug'],
                 'post_content' => $this->format_tour_content($tour),
                 'post_status' => 'publish',
-                'post_type' => 'tour_package'
+                'post_type' => $post_type
             ));
             
             if ($post_id && !is_wp_error($post_id)) {
                 // Set featured image
                 $this->set_featured_image($post_id, $tour['image']);
                 
-                // Set custom meta fields
+                // Set custom meta fields for both systems
                 update_post_meta($post_id, '_tour_duration', $tour['duration']);
                 update_post_meta($post_id, '_tour_price', $tour['sale_price']);
                 update_post_meta($post_id, '_tour_original_price', $tour['price']);
                 update_post_meta($post_id, '_tour_rating', $tour['rating']);
                 update_post_meta($post_id, '_tour_difficulty', $tour['difficulty']);
+                
+                // Also set WTE meta fields for compatibility
+                update_post_meta($post_id, 'wpte_trip_duration', $tour['duration']);
+                update_post_meta($post_id, 'wpte_trip_price', $tour['sale_price']);
+                update_post_meta($post_id, 'wpte_trip_original_price', $tour['price']);
+                update_post_meta($post_id, 'wpte_trip_availability', 'available');
                 
                 $count++;
             }
@@ -551,11 +592,15 @@ class Travelio_Demo_Importer {
             $menu_id = $menu->term_id;
         }
         
+        // Determine trips URL based on post type
+        $trips_url = post_type_exists('trip') ? home_url('/trips/') : home_url('/tour-packages/');
+        $destinations_url = post_type_exists('destination') ? home_url('/destinations/') : home_url('/');
+        
         // Add menu items
         $items = array(
             array('title' => 'Home', 'url' => home_url('/')),
-            array('title' => 'Tours', 'url' => home_url('/trips/')),
-            array('title' => 'Destinations', 'url' => home_url('/destinations/')),
+            array('title' => 'Tours', 'url' => $trips_url),
+            array('title' => 'Destinations', 'url' => $destinations_url),
             array('title' => 'About', 'url' => home_url('/about-us/')),
             array('title' => 'Contact', 'url' => home_url('/contact/'))
         );
