@@ -297,3 +297,67 @@ button{font-family:inherit}
   .tv-stats{grid-template-columns:repeat(2,1fr);gap:18px}
   .tv-form .row{grid-template-columns:1fr}
 }
+
+/* =========================================================
+   Enhanced Travila-style Homepage Styles
+   ========================================================= */
+
+/* Hero enhancements */
+.tv-hero--travila { min-height: 95vh; }
+.tv-hero--travila .tv-hero-inner { padding-top: 180px; max-width: 1000px; }
+.tv-eyebrow--light { color: #FFC857 !important; }
+
+/* Modern search box */
+.tv-search-box--modern { background: rgba(255,255,255,.98); border-radius: 20px; padding: 20px; box-shadow: var(--tv-shadow-lg); margin-top: 40px; }
+.tv-search--horizontal { display: block; }
+.tv-search-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; align-items: end; }
+.tv-search-field--icon { display: flex; align-items: center; gap: 12px; background: #f8f9fa; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--tv-border); transition: all .3s ease; }
+.tv-search-field--icon:hover { border-color: var(--tv-orange); background: #fff; }
+.tv-search-icon { font-size: 1.4rem; color: var(--tv-orange); }
+.tv-search-field--icon label { font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: var(--tv-muted); margin-bottom: 2px; display: block; }
+.tv-search-field--icon input, .tv-search-field--icon select { border: 0; background: transparent; font-size: .95rem; color: var(--tv-navy); outline: none; width: 100%; }
+.tv-search-field--action { display: flex; align-items: stretch; }
+.tv-search-field--action .tv-btn { height: auto; padding: 16px 32px; border-radius: 12px; }
+.tv-btn--large { font-size: 1.05rem; padding: 16px 40px; }
+
+/* Search filters toggle */
+.tv-search-filters-toggle { text-align: center; margin-top: 15px; }
+.tv-btn-link { background: none; border: none; color: var(--tv-muted); cursor: pointer; font-size: .9rem; display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 8px; transition: all .2s ease; }
+.tv-btn-link:hover { color: var(--tv-orange); background: rgba(255,122,45,.08); }
+.tv-search-filters { display: none; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--tv-border); }
+.tv-search-filters.is-active { display: grid; animation: tvSlideDown .3s ease; }
+.tv-filter-group label { font-size: .75rem; font-weight: 600; color: var(--tv-muted); text-transform: uppercase; margin-bottom: 6px; display: block; }
+.tv-filter-group select { width: 100%; padding: 10px 14px; border: 1px solid var(--tv-border); border-radius: 8px; background: #fff; color: var(--tv-navy); font-size: .9rem; }
+
+/* Hero stats overlay */
+.tv-hero-stats { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(11,37,69,.9), transparent); padding: 40px 0 20px; }
+.tv-stats--inline { display: flex; justify-content: center; gap: 60px; }
+.tv-stats--inline .tv-stat-num { color: #fff; }
+.tv-stats--inline .tv-stat-label { color: rgba(255,255,255,.8); }
+
+/* WTE card enhancements */
+.tv-card--wte { position: relative; }
+.tv-card-wte-badge { position: absolute; top: 14px; right: 14px; background: #10b981; color: #fff; padding: 4px 10px; border-radius: 20px; font-size: .7rem; font-weight: 600; }
+.tv-card-actions { margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--tv-border); }
+.tv-btn--small { padding: 10px 20px; font-size: .85rem; border-radius: 8px; }
+
+/* Feature highlights for WTE */
+.tv-feature--highlight { background: linear-gradient(135deg, rgba(255,122,45,.08), rgba(255,200,87,.08)); border-color: rgba(255,122,45,.2); }
+.tv-feature--highlight .tv-feature-icon { background: rgba(255,122,45,.15); }
+
+/* CTA actions */
+.tv-cta-actions { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 25px; }
+
+/* Responsive adjustments for new search */
+@media (max-width: 1024px) {
+    .tv-search-row { grid-template-columns: repeat(2, 1fr); }
+    .tv-search-filters { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+    .tv-search-row { grid-template-columns: 1fr; }
+    .tv-search-filters { grid-template-columns: 1fr; }
+    .tv-stats--inline { flex-wrap: wrap; gap: 30px; }
+    .tv-hero--travila .tv-hero-inner { padding-top: 140px; }
+    .tv-cta-actions { flex-direction: column; align-items: center; }
+    .tv-cta-actions .tv-btn { width: 100%; max-width: 280px; justify-content: center; }
+}
