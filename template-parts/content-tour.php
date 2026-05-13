@@ -12,7 +12,7 @@ $is_feat  = (bool) travelio_meta( '_tv_tour_featured', '' );
 <article <?php post_class( 'tv-card' ); ?>>
     <a href="<?php the_permalink(); ?>" class="tv-card-media">
         <?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'travelio-card' ); }
-        else { echo '<img src="https://source.unsplash.com/600x450/?'. esc_attr( sanitize_title( get_the_title() ) ) .',travel" alt="">'; } ?>
+        else { echo '<img src="https://picsum.photos/600/450?random='. esc_attr( get_the_ID() ) .'&travel" alt="">'; } ?>
         <?php if ( $is_feat ) : ?><span class="tv-card-badge"><?php esc_html_e( 'Featured', 'travelio' ); ?></span><?php endif; ?>
     </a>
     <div class="tv-card-body">

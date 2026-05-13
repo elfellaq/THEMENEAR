@@ -62,208 +62,364 @@ class Travelio_Demo_Importer {
                 'slug' => 'dubai',
                 'description' => 'A futuristic metropolis in the desert offering luxury shopping and ultramodern architecture.',
                 'image' => 'https://images.unsplash.com/photo-1512453979798-5ea904ac6605?w=800&q=80'
+            ),
+            array(
+                'title' => 'Marrakech',
+                'slug' => 'marrakech',
+                'description' => 'The Red City of Morocco, a magical blend of ancient traditions and vibrant souks.',
+                'image' => 'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80'
+            ),
+            array(
+                'title' => 'Merzouga',
+                'slug' => 'merzouga',
+                'description' => 'Gateway to the Sahara Desert, famous for its towering golden dunes.',
+                'image' => 'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80'
+            ),
+            array(
+                'title' => 'Fes',
+                'slug' => 'fes',
+                'description' => 'Morocco\'s spiritual and cultural capital, home to the world\'s oldest university.',
+                'image' => 'https://images.unsplash.com/photo-1577147443647-8185bbc09f5d?w=800&q=80'
+            ),
+            array(
+                'title' => 'Chefchaouen',
+                'slug' => 'chefchaouen',
+                'description' => 'The Blue Pearl of Morocco, a picturesque mountain town painted in shades of blue.',
+                'image' => 'https://images.unsplash.com/photo-1560706248-9c24d73e6531?w=800&q=80'
             )
         );
         
         // Sample Tours
         $this->sample_tours = array(
             array(
-                'title' => 'Paris Romantic Getaway',
-                'slug' => 'paris-romantic-getaway',
-                'destination' => 'paris',
-                'duration' => '5 Days',
-                'price' => 1299,
-                'sale_price' => 999,
+                'title' => '3 Jours dans le Désert de Merzouga au Départ de Marrakech',
+                'slug' => '3-jours-desert-merzouga-marrakech',
+                'destination' => 'merzouga',
+                'duration' => '3 Jours',
+                'price' => 299,
+                'sale_price' => 249,
                 'rating' => 4.9,
-                'reviews' => 127,
-                'image' => 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
+                'reviews' => 342,
+                'image' => 'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80',
                 'gallery' => array(
-                    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&q=80',
-                    'https://images.unsplash.com/photo-1520939817895-060bdaf4de1e?w=800&q=80',
-                    'https://images.unsplash.com/photo-1509248961158-e54f6934749c?w=800&q=80'
+                    'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80',
+                    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80',
+                    'https://images.unsplash.com/photo-1534234828563-02511c750b8e?w=800&q=80'
                 ),
-                'description' => 'Experience the romance of Paris with this carefully curated 5-day tour. Visit the Eiffel Tower, cruise along the Seine, explore the Louvre Museum, and enjoy authentic French cuisine in charming bistros.',
+                'description' => 'Découvrez la magie du Sahara marocain lors de cette excursion inoubliable de 3 jours au départ de Marrakech. Traversez les montagnes de l\'Atlas, visitez les kasbahs anciennes et passez une nuit sous les étoiles dans un campement berbère luxueux.',
                 'highlights' => array(
-                    'Skip-the-line access to Eiffel Tower',
-                    'Seine River sunset cruise with champagne',
-                    'Guided tour of Louvre Museum',
-                    'Traditional French cooking class',
-                    'Visit to Palace of Versailles'
+                    'Traversée spectaculaire des montagnes du Haut Atlas',
+                    'Visite de la Kasbah Ait Ben Haddou, site UNESCO',
+                    'Balade à dos de chameau au coucher du soleil',
+                    'Nuit en bivouac de luxe avec dîner traditionnel',
+                    'Spectacle de musique gnawa autour du feu de camp'
                 ),
                 'includes' => array(
-                    '4 nights accommodation in 4-star hotel',
-                    'Daily breakfast',
-                    'Airport transfers',
-                    'Professional English-speaking guide',
-                    'All entrance fees'
+                    'Transport en 4x4 climatisé avec chauffeur',
+                    '2 nuits en hôtel et bivouac de luxe',
+                    'Petit-déjeuner, déjeuner et dîner inclus',
+                    'Balade à chameau incluse',
+                    'Guide francophone expérimenté'
                 ),
-                'difficulty' => 'Easy',
-                'category' => 'Romantic'
+                'difficulty' => 'Facile',
+                'category' => 'Désert & Aventure'
             ),
             array(
-                'title' => 'Tokyo Adventure Explorer',
-                'slug' => 'tokyo-adventure-explorer',
-                'destination' => 'tokyo',
-                'duration' => '7 Days',
-                'price' => 1899,
-                'sale_price' => 1599,
-                'rating' => 4.8,
-                'reviews' => 94,
-                'image' => 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80',
+                'title' => 'Excursion d\'une Journée à Ouzoud depuis Marrakech',
+                'slug' => 'excursion-ouzoud-journee-marrakech',
+                'destination' => 'marrakech',
+                'duration' => '1 Jour',
+                'price' => 89,
+                'sale_price' => 69,
+                'rating' => 4.7,
+                'reviews' => 218,
+                'image' => 'https://images.unsplash.com/photo-1588668214407-6ea9f6d7a9fe?w=800&q=80',
                 'gallery' => array(
-                    'https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=800&q=80',
-                    'https://images.unsplash.com/photo-1536098561742-ca998e48cbcc?w=800&q=80',
-                    'https://images.unsplash.com/photo-1528164344705-47542687000d?w=800&q=80'
+                    'https://images.unsplash.com/photo-1588668214407-6ea9f6d7a9fe?w=800&q=80',
+                    'https://images.unsplash.com/photo-1570535384209-4d3cd127faa9?w=800&q=80',
+                    'https://images.unsplash.com/photo-1534438097545-a2c22c57f01b?w=800&q=80'
                 ),
-                'description' => 'Discover the wonders of Tokyo from ancient temples to modern skyscrapers. Experience traditional tea ceremonies, explore bustling markets, and witness the famous cherry blossoms.',
+                'description' => 'Évadez-vous de l\'agitation de Marrakech pour découvrir les magnifiques cascades d\'Ouzoud, les plus hautes d\'Afrique du Nord. Une journée rafraîchissante au cœur de la nature avec possibilité de baignade et d\'observation des singes macaques.',
                 'highlights' => array(
-                    'Visit Senso-ji Temple in Asakusa',
-                    'Traditional tea ceremony experience',
-                    'Shibuya Crossing and Meiji Shrine',
-                    'Day trip to Mount Fuji',
-                    'Tsukiji Fish Market food tour'
+                    'Admiration des cascades de 110 mètres de hauteur',
+                    'Promenade en barque au pied des chutes',
+                    'Observation des macaques de Barbarie en liberté',
+                    'Déjeuner traditionnel dans un restaurant panoramique',
+                    'Arrêt photo à la vallée de l\'Atlas'
                 ),
                 'includes' => array(
-                    '6 nights accommodation in ryokan and hotel',
-                    'All meals included',
-                    'JR Pass for unlimited train travel',
-                    'English-speaking guide',
-                    'Cultural activities and workshops'
+                    'Transport aller-retour en minibus climatisé',
+                    'Guide accompagnateur francophone',
+                    'Temps libre pour explorer les cascades',
+                    'Assurance voyage incluse',
+                    'Prise en charge à votre hôtel'
                 ),
-                'difficulty' => 'Moderate',
-                'category' => 'Adventure'
+                'difficulty' => 'Facile',
+                'category' => 'Nature & Découverte'
             ),
             array(
-                'title' => 'New York City Highlights',
-                'slug' => 'nyc-highlights',
-                'destination' => 'new-york',
-                'duration' => '4 Days',
+                'title' => 'Circuit Impériale: Marrakech, Fès, Rabat et Casablanca',
+                'slug' => 'circuit-imperiale-maroc-7-jours',
+                'destination' => 'fes',
+                'duration' => '7 Jours',
                 'price' => 899,
                 'sale_price' => 749,
-                'rating' => 4.7,
-                'reviews' => 203,
-                'image' => 'https://images.unsplash.com/photo-1496442226666-8d4a0e62e6e9?w=800&q=80',
-                'gallery' => array(
-                    'https://images.unsplash.com/photo-1534438097545-a2c22c57f01b?w=800&q=80',
-                    'https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80',
-                    'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=800&q=80'
-                ),
-                'description' => 'Explore the Big Apple with our comprehensive city tour. From Central Park to Times Square, Statue of Liberty to Broadway shows, experience everything NYC has to offer.',
-                'highlights' => array(
-                    'Statue of Liberty and Ellis Island ferry',
-                    'Central Park bike tour',
-                    'Metropolitan Museum of Art',
-                    'Broadway show tickets included',
-                    'Empire State Building observation deck'
-                ),
-                'includes' => array(
-                    '3 nights in Midtown Manhattan hotel',
-                    'Daily continental breakfast',
-                    'CityPASS attraction tickets',
-                    'Hop-on hop-off bus tour pass',
-                    'Welcome dinner cruise'
-                ),
-                'difficulty' => 'Easy',
-                'category' => 'City Tour'
-            ),
-            array(
-                'title' => 'Bali Beach & Culture',
-                'slug' => 'bali-beach-culture',
-                'destination' => 'bali',
-                'duration' => '6 Days',
-                'price' => 1199,
-                'sale_price' => 899,
-                'rating' => 4.9,
-                'reviews' => 156,
-                'image' => 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800&q=80',
-                'gallery' => array(
-                    'https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=800&q=80',
-                    'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=800&q=80',
-                    'https://images.unsplash.com/photo-1538485399081-7191377e8241?w=800&q=80'
-                ),
-                'description' => 'Relax on pristine beaches while immersing yourself in Balinese culture. Visit ancient temples, watch traditional dances, and rejuvenate with spa treatments.',
-                'highlights' => array(
-                    'Sunrise at Borobudur Temple',
-                    'Traditional Kecak dance performance',
-                    'Ubud Monkey Forest and rice terraces',
-                    'Snorkeling in Nusa Penida',
-                    'Balinese massage and spa day'
-                ),
-                'includes' => array(
-                    '5 nights in beachfront resort',
-                    'Daily breakfast and 2 dinners',
-                    'Private airport transfers',
-                    'Temple entrance fees',
-                    'Spa treatment voucher'
-                ),
-                'difficulty' => 'Easy',
-                'category' => 'Beach & Relaxation'
-            ),
-            array(
-                'title' => 'Ancient Rome Discovery',
-                'slug' => 'ancient-rome-discovery',
-                'destination' => 'rome',
-                'duration' => '5 Days',
-                'price' => 1399,
-                'sale_price' => 1149,
                 'rating' => 4.8,
-                'reviews' => 89,
-                'image' => 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800&q=80',
+                'reviews' => 156,
+                'image' => 'https://images.unsplash.com/photo-1577147443647-8185bbc09f5d?w=800&q=80',
                 'gallery' => array(
-                    'https://images.unsplash.com/photo-1555992336-b8b5c6b7e9b9?w=800&q=80',
-                    'https://images.unsplash.com/photo-1515542706656-8e6ef1763e3b?w=800&q=80',
-                    'https://images.unsplash.com/photo-1513829596327-2bb8fcc59851?w=800&q=80'
+                    'https://images.unsplash.com/photo-1577147443647-8185bbc09f5d?w=800&q=80',
+                    'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80',
+                    'https://images.unsplash.com/photo-1560706248-9c24d73e6531?w=800&q=80'
                 ),
-                'description' => 'Step back in time and explore the glory of Ancient Rome. Visit the Colosseum, Roman Forum, Vatican City, and toss a coin in the Trevi Fountain.',
+                'description' => 'Explorez les quatre villes impériales du Maroc en un circuit complet de 7 jours. De l\'effervescence de Marrakech à la spiritualité de Fès, en passant par Rabat la capitale et Casablanca la moderne, découvrez mille ans d\'histoire marocaine.',
                 'highlights' => array(
-                    'Skip-the-line Colosseum and Forum tour',
-                    'Vatican Museums and Sistine Chapel',
-                    'St. Peter\'s Basilica guided visit',
-                    'Trevi Fountain and Spanish Steps',
-                    'Authentic Roman food tour in Trastevere'
+                    'Visite guidée de la médina de Fès, la plus grande zone piétonne au monde',
+                    'Exploration du Palais Royal et des jardins de la Kasbah des Oudayas à Rabat',
+                    'Découverte de la majestueuse mosquée Hassan II à Casablanca',
+                    'Promenade dans les souks colorés de Marrakech et place Jemaa el-Fna',
+                    'Rencontre avec des artisans locaux et démonstrations de savoir-faire traditionnel'
                 ),
                 'includes' => array(
-                    '4 nights in historic center hotel',
-                    'Daily Italian breakfast',
-                    'All museum and attraction entries',
-                    'Professional archaeologist guide',
-                    'Traditional pizza-making class'
+                    '6 nuits en hôtels 4 étoiles avec petit-déjeuner',
+                    'Transport privé en véhicule climatisé',
+                    'Guides locaux certifiés dans chaque ville',
+                    'Tous les transferts et péages',
+                    'Dîners traditionnels inclus (3 repas)'
                 ),
-                'difficulty' => 'Moderate',
-                'category' => 'Historical'
+                'difficulty' => 'Moyen',
+                'category' => 'Culture & Patrimoine'
             ),
             array(
-                'title' => 'Dubai Luxury Experience',
-                'slug' => 'dubai-luxury-experience',
-                'destination' => 'dubai',
-                'duration' => '4 Days',
-                'price' => 1699,
-                'sale_price' => 1399,
-                'rating' => 4.9,
-                'reviews' => 112,
-                'image' => 'https://images.unsplash.com/photo-1512453979798-5ea904ac6605?w=800&q=80',
+                'title' => 'Aventure 4x4 dans le Désert d\'Agafay',
+                'slug' => 'aventure-4x4-desert-agafay',
+                'destination' => 'marrakech',
+                'duration' => 'Demi-journée',
+                'price' => 129,
+                'sale_price' => 99,
+                'rating' => 4.6,
+                'reviews' => 189,
+                'image' => 'https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=800&q=80',
                 'gallery' => array(
-                    'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?w=800&q=80',
-                    'https://images.unsplash.com/photo-1597659840241-37e2b9c2f55f?w=800&q=80',
-                    'https://images.unsplash.com/photo-1546412414-e1885259563a?w=800&q=80'
+                    'https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?w=800&q=80',
+                    'https://images.unsplash.com/photo-1534234828563-02511c750b8e?w=800&q=80',
+                    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80'
                 ),
-                'description' => 'Indulge in ultimate luxury in Dubai. Stay in 5-star hotels, dine at Michelin-starred restaurants, and experience thrilling desert safaris.',
+                'description' => 'Vivez des sensations fortes lors de cette excursion en 4x4 dans le désert pierreux d\'Agafay, à seulement 30 minutes de Marrakech. Un paysage lunaire unique au monde vous attend pour une aventure mémorable.',
                 'highlights' => array(
-                    'Burj Khalifa At The Top experience',
-                    'Private desert safari with BBQ dinner',
-                    'Dubai Mall and Fountain show',
-                    'Luxury yacht cruise in Dubai Marina',
-                    'Gold and Spice Souk guided tour'
+                    'Conduite sportive dans les pistes du désert d\'Agafay',
+                    'Arrêt dans un village berbère authentique',
+                    'Thé à la menthe chez l\'habitant',
+                    'Photos panoramiques avec l\'Atlas en toile de fond',
+                    'Option quad ou buggy disponible en supplément'
                 ),
                 'includes' => array(
-                    '3 nights in 5-star luxury hotel',
-                    'Daily gourmet breakfast',
-                    'VIP airport fast-track service',
-                    'Desert safari with premium seating',
-                    'Yacht cruise with refreshments'
+                    'Location de 4x4 avec chauffeur professionnel',
+                    'Assurance tous risques',
+                    'Thé berbère traditionnel',
+                    'Transfert depuis votre hôtel',
+                    'Casque et équipement de sécurité'
                 ),
-                'difficulty' => 'Easy',
-                'category' => 'Luxury'
+                'difficulty' => 'Moyen',
+                'category' => 'Aventure & Sensations'
+            ),
+            array(
+                'title' => 'Escapade Romantique dans les Jardins de Majorelle',
+                'slug' => 'escapade-jardins-majorelle-marrakech',
+                'destination' => 'marrakech',
+                'duration' => 'Demi-journée',
+                'price' => 79,
+                'sale_price' => 59,
+                'rating' => 4.9,
+                'reviews' => 267,
+                'image' => 'https://images.unsplash.com/photo-1597316747660-178b94a3b87a?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1597316747660-178b94a3b87a?w=800&q=80',
+                    'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80',
+                    'https://images.unsplash.com/photo-1560706248-9c24d73e6531?w=800&q=80'
+                ),
+                'description' => 'Laissez-vous envoûter par la beauté des célèbres Jardins Majorelle, chef-d\'œuvre botanique créé par Jacques Majorelle et restauré par Yves Saint Laurent. Une expérience sensorielle unique au cœur de Marrakech.',
+                'highlights' => array(
+                    'Visite prioritaire sans file d\'attente des jardins',
+                    'Découverte du Musée Berbère adjacent',
+                    'Photo devant la villa bleue iconique',
+                    'Collection exceptionnelle de cactus du monde entier',
+                    'Pause café dans le café du jardin'
+                ),
+                'includes' => array(
+                    'Billets d\'entrée coupe-file inclus',
+                    'Guide conférencier francophone',
+                    'Transport depuis et vers votre hôtel',
+                    'Boisson de bienvenue offerte',
+                    'Album photo souvenir numérique'
+                ),
+                'difficulty' => 'Facile',
+                'category' => 'Culture & Détente'
+            ),
+            array(
+                'title' => 'Randonnée dans l\'Atlas et Rencontre Berbère',
+                'slug' => 'randonnee-atlas-rencontre-berbere',
+                'destination' => 'marrakech',
+                'duration' => '1 Jour',
+                'price' => 119,
+                'sale_price' => 89,
+                'rating' => 4.8,
+                'reviews' => 134,
+                'image' => 'https://images.unsplash.com/photo-1518182170546-0766ce6fec56?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1518182170546-0766ce6fec56?w=800&q=80',
+                    'https://images.unsplash.com/photo-1534234828563-02511c750b8e?w=800&q=80',
+                    'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80'
+                ),
+                'description' => 'Échappez-vous dans les montagnes du Haut Atlas pour une journée de randonnée authentique. Découvrez les villages perchés, les vallées verdoyantes et partagez un moment convivial avec une famille berbère locale.',
+                'highlights' => array(
+                    'Randonnée guidée de niveau accessible (3-4 heures)',
+                    'Déjeuner traditionnel tagine préparé chez l\'habitant',
+                    'Cérémonie du thé à la menthe avec une famille berbère',
+                    'Visite d\'un grenier collectif (agadir) traditionnel',
+                    'Points de vue panoramiques sur les sommets enneigés'
+                ),
+                'includes' => array(
+                    'Guide de montagne certifié francophone',
+                    'Transport en minibus 4x4',
+                    'Déjeuner complet chez l\'habitant',
+                    'Eau et collations pendant la randonnée',
+                    'Assurance rapatriement incluse'
+                ),
+                'difficulty' => 'Moyen',
+                'category' => 'Randonnée & Nature'
+            ),
+            array(
+                'title' => 'Tour des Oasis et Vallée du Dadès',
+                'slug' => 'tour-oasis-vallee-dades',
+                'destination' => 'merzouga',
+                'duration' => '2 Jours',
+                'price' => 259,
+                'sale_price' => 219,
+                'rating' => 4.7,
+                'reviews' => 98,
+                'image' => 'https://images.unsplash.com/photo-1534234828563-02511c750b8e?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1534234828563-02511c750b8e?w=800&q=80',
+                    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80',
+                    'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80'
+                ),
+                'description' => 'Explorez la route des mille kasbahs à travers la vallée du Dadès et ses gorges spectaculaires. Un voyage au cœur des oasis millénaires et des villages fortifiés du sud marocain.',
+                'highlights' => array(
+                    'Traversée des gorges du Dadès et du Todra',
+                    'Visite de la vallée des roses à Kelaat M\'Gouna',
+                    'Arrêt dans les oasis de Skoura et son palmier millénaire',
+                    'Nuit en kasbah-hôtel de charme avec piscine',
+                    'Dégustation de produits locaux (huile d\'argan, miel, amandes)'
+                ),
+                'includes' => array(
+                    'Transport en 4x4 tout confort',
+                    '1 nuit en kasbah-hôtel 3 étoiles avec demi-pension',
+                    'Guide accompagnateur spécialisé',
+                    'Entrées aux sites touristiques',
+                    'Assistance 24h/24 pendant le séjour'
+                ),
+                'difficulty' => 'Facile',
+                'category' => 'Découverte & Patrimoine'
+            ),
+            array(
+                'title' => 'Chefchaouen la Perle Bleue - Excursion de 3 Jours',
+                'slug' => 'chefchaouen-perle-bleue-3-jours',
+                'destination' => 'chefchaouen',
+                'duration' => '3 Jours',
+                'price' => 349,
+                'sale_price' => 299,
+                'rating' => 4.9,
+                'reviews' => 221,
+                'image' => 'https://images.unsplash.com/photo-1560706248-9c24d73e6531?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1560706248-9c24d73e6531?w=800&q=80',
+                    'https://images.unsplash.com/photo-1577147443647-8185bbc09f5d?w=800&q=80',
+                    'https://images.unsplash.com/photo-1539020140153-e479b8c22e70?w=800&q=80'
+                ),
+                'description' => 'Partez à la découverte de Chefchaouen, la célèbre ville bleue nichée dans les montagnes du Rif. Trois jours pour s\'imprégner de l\'atmosphère unique de cette perle andalouse aux ruelles peintes en bleu azur.',
+                'highlights' => array(
+                    'Promenade photographique dans les ruelles bleues de la médina',
+                    'Randonnée jusqu\'à la kasbah pour vue panoramique',
+                    'Visite de la Grande Mosquée et de la place Outa el Hammam',
+                    'Shopping d\'artisanat local (tissus, cuir, poteries)',
+                    'Dégustation de spécialités rifaines (fromage de chèvre, miel)'
+                ),
+                'includes' => array(
+                    '2 nuits en riad traditionnel avec petit-déjeuner',
+                    'Transport climatique aller-retour depuis Marrakech',
+                    'Guide local francophone à Chefchaouen',
+                    'Atelier de teinture traditionnelle (optionnel)',
+                    'Carte postale souvenir personnalisée'
+                ),
+                'difficulty' => 'Facile',
+                'category' => 'Culture & Photographie'
+            ),
+            array(
+                'title' => 'Surf et Plage à Essaouira - Week-end Détente',
+                'slug' => 'surf-plage-essaouira-weekend',
+                'destination' => 'marrakech',
+                'duration' => '2 Jours',
+                'price' => 199,
+                'sale_price' => 169,
+                'rating' => 4.6,
+                'reviews' => 175,
+                'image' => 'https://images.unsplash.com/photo-1560508195-9a963d6bb9a6?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1560508195-9a963d6bb9a6?w=800&q=80',
+                    'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80',
+                    'https://images.unsplash.com/photo-1534438097545-a2c22c57f01b?w=800&q=80'
+                ),
+                'description' => 'Évadez-vous vers la cité des alizés, Essaouira, pour un week-end détente entre surf, plage et découverte culturelle. Une ambiance relaxante garantie dans cette ville portuaire classée UNESCO.',
+                'highlights' => array(
+                    'Cours de surf débutant ou intermédiaire inclus',
+                    'Promenade sur les remparts portugais du XVIIIe siècle',
+                    'Visite du port de pêche et criée aux poissons',
+                    'Soirée musicale gnawa dans un café de la médina',
+                    'Temps libre pour shopping et farniente'
+                ),
+                'includes' => array(
+                    '1 nuit en hôtel face à la mer avec petit-déjeuner',
+                    'Transport depuis Marrakech en bus touristique',
+                    'Cours de surf de 2 heures avec matériel',
+                    'Guide accompagnateur bilingue',
+                    'Kit de plage offert (serviette, crème solaire)'
+                ),
+                'difficulty' => 'Facile',
+                'category' => 'Plage & Sports Nautiques'
+            ),
+            array(
+                'title' => 'Expérience Luxe: Dîner Privé sous les Étoiles dans le Désert',
+                'slug' => 'experience-luxe-diner-prive-desert',
+                'destination' => 'merzouga',
+                'duration' => 'Soirée',
+                'price' => 399,
+                'sale_price' => 349,
+                'rating' => 5.0,
+                'reviews' => 87,
+                'image' => 'https://images.unsplash.com/photo-1518182170546-0766ce6fec56?w=800&q=80',
+                'gallery' => array(
+                    'https://images.unsplash.com/photo-1518182170546-0766ce6fec56?w=800&q=80',
+                    'https://images.unsplash.com/photo-1542401886-65d6c61db217?w=800&q=80',
+                    'https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=800&q=80'
+                ),
+                'description' => 'Vivez une expérience exclusive et romantique avec un dîner gastronomique privé au cœur des dunes de sable doré. Un service haut de gamme pour une soirée inoubliable sous le ciel étoilé du Sahara.',
+                'highlights' => array(
+                    'Installation privée dans un salon berbère de luxe',
+                    'Menu gastronomique 5 services par chef privé',
+                    'Musique live traditionnelle (violon ou oud)',
+                    'Observation astronomique avec télescope professionnel',
+                    'Service de voiturier et transfert VIP'
+                ),
+                'includes' => array(
+                    'Transfert en véhicule de luxe (Mercedes V-Class)',
+                    'Dîner gastronomique avec accords mets-vins',
+                    'Décoration florale et ambiance personnalisée',
+                    'Photographe professionnel (30 minutes)',
+                    'Cadeau souvenir personnalisé'
+                ),
+                'difficulty' => 'Facile',
+                'category' => 'Luxe & Romantisme'
             )
         );
     }
