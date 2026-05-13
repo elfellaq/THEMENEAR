@@ -1,70 +1,135 @@
 <?php
 /**
- * Front page template (home).
+ * Front page template (home) - Enhanced to match Travila style with WTE features.
  *
  * @package Travelio
  */
 
 get_header();
 
-$hero_title    = get_theme_mod( 'travelio_hero_title', __( 'Explore the world, one journey at a time', 'travelio' ) );
-$hero_accent   = get_theme_mod( 'travelio_hero_accent', __( 'extraordinary', 'travelio' ) );
-$hero_subtitle = get_theme_mod( 'travelio_hero_subtitle', __( 'Hand-crafted tour packages, breathtaking destinations, and the kind of memories that stay with you forever.', 'travelio' ) );
+$hero_title    = get_theme_mod( 'travelio_hero_title', __( 'Discover Your Next Adventure', 'travelio' ) );
+$hero_accent   = get_theme_mod( 'travelio_hero_accent', __( 'Unforgettable', 'travelio' ) );
+$hero_subtitle = get_theme_mod( 'travelio_hero_subtitle', __( 'Explore amazing places at exclusive deals with our trusted partners', 'travelio' ) );
 $hero_image    = travelio_hero_image();
+
+// Check if WP Travel Engine is active
+$wte_active = class_exists( 'Wp_Travel_Engine' ) || post_type_exists( 'trip' );
 ?>
 
-<section class="tv-hero" style="background-image:linear-gradient(135deg,rgba(11,37,69,.75),rgba(11,37,69,.45)),url('<?php echo esc_url( $hero_image ); ?>')">
+<!-- Hero Section with Advanced Search -->
+<section class="tv-hero tv-hero--travila" style="background-image:linear-gradient(135deg,rgba(11,37,69,.7),rgba(11,37,69,.3)),url('<?php echo esc_url( $hero_image ); ?>')">
     <div class="tv-container tv-hero-inner">
-        <span class="tv-eyebrow" style="color:#FFC857"><?php esc_html_e( 'Welcome to Travelio', 'travelio' ); ?></span>
-        <h1><?php echo wp_kses_post( $hero_title ); ?> <span class="tv-accent"><?php echo esc_html( $hero_accent ); ?></span></h1>
+        <span class="tv-eyebrow tv-eyebrow--light"><?php esc_html_e( 'Welcome to Travelio', 'travelio' ); ?></span>
+        <h1><?php echo wp_kses_post( $hero_title ); ?> <span class="tv-accent"><?php echo esc_html( $hero_accent ); ?></span> <?php esc_html_e( 'Journeys', 'travelio' ); ?></h1>
         <p class="lead"><?php echo esc_html( $hero_subtitle ); ?></p>
 
-        <div class="tv-hero-actions">
-            <a href="<?php echo esc_url( get_post_type_archive_link( 'tour_package' ) ?: '#packages' ); ?>" class="tv-btn tv-btn--primary"><?php esc_html_e( 'Browse Tours', 'travelio' ); ?></a>
-            <a href="#destinations" class="tv-btn tv-btn--ghost"><?php esc_html_e( 'Discover Places', 'travelio' ); ?></a>
+        <!-- Advanced Search Box -->
+        <div class="tv-search-box tv-search-box--modern">
+            <form class="tv-search tv-search--horizontal" role="search" method="get" action="<?php echo esc_url( $wte_active ? get_post_type_archive_link( 'trip' ) : ( get_post_type_archive_link( 'tour_package' ) ?: home_url( '/' ) ) ); ?>">
+                <div class="tv-search-row">
+                    <div class="tv-search-field tv-search-field--icon">
+                        <span class="tv-search-icon">&#128205;</span>
+                        <div>
+                            <label><?php esc_html_e( 'Destination', 'travelio' ); ?></label>
+                            <input type="text" name="s" placeholder="<?php esc_attr_e( 'Where are you going?', 'travelio' ); ?>">
+                        </div>
+                    </div>
+                    <div class="tv-search-field tv-search-field--icon">
+                        <span class="tv-search-icon">&#128197;</span>
+                        <div>
+                            <label><?php esc_html_e( 'Check In', 'travelio' ); ?></label>
+                            <input type="date" name="check_in" class="tv-date-picker">
+                        </div>
+                    </div>
+                    <div class="tv-search-field tv-search-field--icon">
+                        <span class="tv-search-icon">&#128197;</span>
+                        <div>
+                            <label><?php esc_html_e( 'Check Out', 'travelio' ); ?></label>
+                            <input type="date" name="check_out" class="tv-date-picker">
+                        </div>
+                    </div>
+                    <div class="tv-search-field tv-search-field--icon">
+                        <span class="tv-search-icon">&#128101;</span>
+                        <div>
+                            <label><?php esc_html_e( 'Travelers', 'travelio' ); ?></label>
+                            <select name="travelers">
+                                <option value="1">1 <?php esc_html_e( 'Traveler', 'travelio' ); ?></option>
+                                <option value="2" selected>2 <?php esc_html_e( 'Travelers', 'travelio' ); ?></option>
+                                <option value="3">3 <?php esc_html_e( 'Travelers', 'travelio' ); ?></option>
+                                <option value="4">4 <?php esc_html_e( 'Travelers', 'travelio' ); ?></option>
+                                <option value="5+">5+ <?php esc_html_e( 'Travelers', 'travelio' ); ?></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="tv-search-field tv-search-field--action">
+                        <button type="submit" class="tv-btn tv-btn--primary tv-btn--large"><?php esc_html_e( 'Search', 'travelio' ); ?></button>
+                    </div>
+                </div>
+                
+                <!-- Advanced Filters Toggle -->
+                <div class="tv-search-filters-toggle">
+                    <button type="button" class="tv-btn-link" onclick="document.querySelector('.tv-search-filters').classList.toggle('is-active')">
+                        <span>&#9881;</span> <?php esc_html_e( 'More Filters', 'travelio' ); ?>
+                    </button>
+                </div>
+                
+                <!-- Advanced Filters Panel -->
+                <div class="tv-search-filters">
+                    <div class="tv-filter-group">
+                        <label><?php esc_html_e( 'Tour Type', 'travelio' ); ?></label>
+                        <select name="tour_type">
+                            <option value=""><?php esc_html_e( 'All Types', 'travelio' ); ?></option>
+                            <option value="adventure"><?php esc_html_e( 'Adventure', 'travelio' ); ?></option>
+                            <option value="cultural"><?php esc_html_e( 'Cultural', 'travelio' ); ?></option>
+                            <option value="beach"><?php esc_html_e( 'Beach & Sun', 'travelio' ); ?></option>
+                            <option value="city"><?php esc_html_e( 'City Break', 'travelio' ); ?></option>
+                            <option value="wildlife"><?php esc_html_e( 'Wildlife Safari', 'travelio' ); ?></option>
+                            <option value="luxury"><?php esc_html_e( 'Luxury', 'travelio' ); ?></option>
+                        </select>
+                    </div>
+                    <div class="tv-filter-group">
+                        <label><?php esc_html_e( 'Duration', 'travelio' ); ?></label>
+                        <select name="duration">
+                            <option value=""><?php esc_html_e( 'Any Duration', 'travelio' ); ?></option>
+                            <option value="1-3">1–3 <?php esc_html_e( 'days', 'travelio' ); ?></option>
+                            <option value="4-7">4–7 <?php esc_html_e( 'days', 'travelio' ); ?></option>
+                            <option value="8-14">8–14 <?php esc_html_e( 'days', 'travelio' ); ?></option>
+                            <option value="15+">15+ <?php esc_html_e( 'days', 'travelio' ); ?></option>
+                        </select>
+                    </div>
+                    <div class="tv-filter-group">
+                        <label><?php esc_html_e( 'Price Range', 'travelio' ); ?></label>
+                        <select name="price_range">
+                            <option value=""><?php esc_html_e( 'Any Price', 'travelio' ); ?></option>
+                            <option value="0-500">$0 - $500</option>
+                            <option value="500-1000">$500 - $1,000</option>
+                            <option value="1000-2000">$1,000 - $2,000</option>
+                            <option value="2000+">$2,000+</option>
+                        </select>
+                    </div>
+                    <div class="tv-filter-group">
+                        <label><?php esc_html_e( 'Difficulty', 'travelio' ); ?></label>
+                        <select name="difficulty">
+                            <option value=""><?php esc_html_e( 'Any Level', 'travelio' ); ?></option>
+                            <option value="easy"><?php esc_html_e( 'Easy', 'travelio' ); ?></option>
+                            <option value="moderate"><?php esc_html_e( 'Moderate', 'travelio' ); ?></option>
+                            <option value="challenging"><?php esc_html_e( 'Challenging', 'travelio' ); ?></option>
+                        </select>
+                    </div>
+                </div>
+            </form>
         </div>
-
-        <form class="tv-search" role="search" method="get" action="<?php echo esc_url( get_post_type_archive_link( 'tour_package' ) ?: home_url( '/' ) ); ?>">
-            <div class="tv-search-field">
-                <label><?php esc_html_e( 'Destination', 'travelio' ); ?></label>
-                <input type="text" name="s" placeholder="<?php esc_attr_e( 'Where to?', 'travelio' ); ?>">
-            </div>
-            <div class="tv-search-field">
-                <label><?php esc_html_e( 'Tour Type', 'travelio' ); ?></label>
-                <select name="tour_type">
-                    <option value=""><?php esc_html_e( 'Any', 'travelio' ); ?></option>
-                    <option value="adventure"><?php esc_html_e( 'Adventure', 'travelio' ); ?></option>
-                    <option value="cultural"><?php esc_html_e( 'Cultural', 'travelio' ); ?></option>
-                    <option value="beach"><?php esc_html_e( 'Beach', 'travelio' ); ?></option>
-                    <option value="city"><?php esc_html_e( 'City Break', 'travelio' ); ?></option>
-                </select>
-            </div>
-            <div class="tv-search-field">
-                <label><?php esc_html_e( 'Duration', 'travelio' ); ?></label>
-                <select name="duration">
-                    <option value=""><?php esc_html_e( 'Any', 'travelio' ); ?></option>
-                    <option value="1-3">1–3 <?php esc_html_e( 'days', 'travelio' ); ?></option>
-                    <option value="4-7">4–7 <?php esc_html_e( 'days', 'travelio' ); ?></option>
-                    <option value="8+">8+ <?php esc_html_e( 'days', 'travelio' ); ?></option>
-                </select>
-            </div>
-            <div class="tv-search-field">
-                <label><?php esc_html_e( 'Travelers', 'travelio' ); ?></label>
-                <input type="number" min="1" name="travelers" value="2">
-            </div>
-            <button type="submit" class="tv-btn tv-btn--primary"><?php esc_html_e( 'Search', 'travelio' ); ?></button>
-        </form>
     </div>
-</section>
-
-<!-- Stats -->
-<section class="tv-section" style="padding-top:60px;padding-bottom:0">
-    <div class="tv-container">
-        <div class="tv-stats">
-            <div class="tv-stat"><div class="tv-stat-num">120+</div><div class="tv-stat-label"><?php esc_html_e( 'Destinations', 'travelio' ); ?></div></div>
-            <div class="tv-stat"><div class="tv-stat-num">450+</div><div class="tv-stat-label"><?php esc_html_e( 'Tour Packages', 'travelio' ); ?></div></div>
-            <div class="tv-stat"><div class="tv-stat-num">25k+</div><div class="tv-stat-label"><?php esc_html_e( 'Happy Travelers', 'travelio' ); ?></div></div>
-            <div class="tv-stat"><div class="tv-stat-num">15</div><div class="tv-stat-label"><?php esc_html_e( 'Years Experience', 'travelio' ); ?></div></div>
+    
+    <!-- Hero Stats Overlay -->
+    <div class="tv-hero-stats">
+        <div class="tv-container">
+            <div class="tv-stats tv-stats--inline">
+                <div class="tv-stat"><div class="tv-stat-num">120+</div><div class="tv-stat-label"><?php esc_html_e( 'Destinations', 'travelio' ); ?></div></div>
+                <div class="tv-stat"><div class="tv-stat-num">450+</div><div class="tv-stat-label"><?php esc_html_e( 'Tour Packages', 'travelio' ); ?></div></div>
+                <div class="tv-stat"><div class="tv-stat-num">25k+</div><div class="tv-stat-label"><?php esc_html_e( 'Happy Travelers', 'travelio' ); ?></div></div>
+                <div class="tv-stat"><div class="tv-stat-num">15</div><div class="tv-stat-label"><?php esc_html_e( 'Years Experience', 'travelio' ); ?></div></div>
+            </div>
         </div>
     </div>
 </section>
@@ -127,7 +192,7 @@ $hero_image    = travelio_hero_image();
     </div>
 </section>
 
-<!-- Tour Packages -->
+<!-- Tour Packages with WTE Integration -->
 <section class="tv-section tv-section--soft" id="packages">
     <div class="tv-container">
         <div class="tv-section-head">
@@ -138,15 +203,68 @@ $hero_image    = travelio_hero_image();
 
         <div class="tv-grid tv-grid--3">
             <?php
+            // Check if WP Travel Engine is active and use 'trip' post type
+            $post_type = $wte_active ? 'trip' : 'tour_package';
+            
             $tours = new WP_Query( array(
-                'post_type'      => 'tour_package',
+                'post_type'      => $post_type,
                 'posts_per_page' => 6,
                 'no_found_rows'  => true,
+                'meta_query'     => array(
+                    'relation' => 'OR',
+                    array(
+                        'key'     => '_tv_tour_featured',
+                        'value'   => '1',
+                        'compare' => '=',
+                    ),
+                    array(
+                        'key'     => 'wte_trip_featured',
+                        'value'   => '1',
+                        'compare' => '=',
+                    ),
+                ),
             ) );
 
             if ( $tours->have_posts() ) :
                 while ( $tours->have_posts() ) : $tours->the_post();
-                    get_template_part( 'template-parts/content', 'tour' );
+                    if ( $wte_active && get_post_type() === 'trip' ) {
+                        // WTE Trip integration - display with WTE meta
+                        $price = get_post_meta( get_the_ID(), 'wte_price', true );
+                        $duration = get_post_meta( get_the_ID(), 'wte_duration', true );
+                        $rating = get_post_meta( get_the_ID(), 'wte_rating', true );
+                        ?>
+                        <article class="tv-card tv-card--wte">
+                            <div class="tv-card-media">
+                                <?php if ( has_post_thumbnail() ) {
+                                    the_post_thumbnail( 'travelio-card' );
+                                } else { ?>
+                                    <img src="https://source.unsplash.com/600x450/?travel,<?php echo esc_attr( sanitize_title( get_the_title() ) ); ?>" alt="<?php the_title_attribute(); ?>">
+                                <?php } ?>
+                                <span class="tv-card-badge"><?php esc_html_e( 'Featured', 'travelio' ); ?></span>
+                                <?php if ( $wte_active ) { ?>
+                                    <span class="tv-card-wte-badge"><?php esc_html_e( 'Bookable', 'travelio' ); ?></span>
+                                <?php } ?>
+                            </div>
+                            <div class="tv-card-body">
+                                <div class="tv-card-meta">
+                                    <span>&#9201; <?php echo esc_html( $duration ?: __( 'Flexible Duration', 'travelio' ) ); ?></span>
+                                </div>
+                                <h3 class="tv-card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
+                                <p style="color:var(--tv-muted);font-size:.92rem;margin:0"><?php echo esc_html( wp_trim_words( get_the_excerpt(), 12 ) ); ?></p>
+                                <div class="tv-card-foot">
+                                    <span class="tv-price"><?php echo esc_html( $price ? '$' . $price : __( 'Contact for Price', 'travelio' ) ); ?><small><?php esc_html_e( ' / person', 'travelio' ); ?></small></span>
+                                    <span class="tv-rating">&#9733; <span class="num"><?php echo esc_html( $rating ?: '4.5' ); ?></span></span>
+                                </div>
+                                <div class="tv-card-actions">
+                                    <a href="<?php the_permalink(); ?>#booking" class="tv-btn tv-btn--primary tv-btn--small"><?php esc_html_e( 'Book Now', 'travelio' ); ?></a>
+                                </div>
+                            </div>
+                        </article>
+                        <?php
+                    } else {
+                        // Standard tour_package display
+                        get_template_part( 'template-parts/content', 'tour' );
+                    }
                 endwhile;
                 wp_reset_postdata();
             else :
@@ -173,6 +291,9 @@ $hero_image    = travelio_hero_image();
                                 <span class="tv-price"><?php echo esc_html( $p[2] ); ?><small><?php esc_html_e( ' / person', 'travelio' ); ?></small></span>
                                 <span class="tv-rating">&#9733; <span class="num"><?php echo esc_html( $p[3] ); ?></span></span>
                             </div>
+                            <div class="tv-card-actions">
+                                <a href="#" class="tv-btn tv-btn--primary tv-btn--small"><?php esc_html_e( 'Book Now', 'travelio' ); ?></a>
+                            </div>
                         </div>
                     </article>
                 <?php endforeach;
@@ -181,12 +302,12 @@ $hero_image    = travelio_hero_image();
         </div>
 
         <div style="text-align:center;margin-top:50px">
-            <a href="<?php echo esc_url( get_post_type_archive_link( 'tour_package' ) ?: '#' ); ?>" class="tv-btn tv-btn--dark"><?php esc_html_e( 'View all packages', 'travelio' ); ?></a>
+            <a href="<?php echo esc_url( $wte_active ? get_post_type_archive_link( 'trip' ) : ( get_post_type_archive_link( 'tour_package' ) ?: '#' ) ); ?>" class="tv-btn tv-btn--dark"><?php esc_html_e( 'View all packages', 'travelio' ); ?></a>
         </div>
     </div>
 </section>
 
-<!-- Why Choose Us -->
+<!-- Why Choose Us with WTE Features -->
 <section class="tv-section">
     <div class="tv-container">
         <div class="tv-section-head">
@@ -214,16 +335,43 @@ $hero_image    = travelio_hero_image();
                 <h3><?php esc_html_e( 'No hidden fees', 'travelio' ); ?></h3>
                 <p><?php esc_html_e( 'What you see is what you pay. Always transparent pricing.', 'travelio' ); ?></p>
             </div>
+            <?php if ( $wte_active ) : ?>
+            <div class="tv-feature tv-feature--highlight">
+                <div class="tv-feature-icon">&#128179;</div>
+                <h3><?php esc_html_e( 'Instant Confirmation', 'travelio' ); ?></h3>
+                <p><?php esc_html_e( 'Book and receive instant confirmation for your peace of mind.', 'travelio' ); ?></p>
+            </div>
+            <div class="tv-feature tv-feature--highlight">
+                <div class="tv-feature-icon">&#128196;</div>
+                <h3><?php esc_html_e( 'E-Voucher Ready', 'travelio' ); ?></h3>
+                <p><?php esc_html_e( 'Digital vouchers accepted - no need to print tickets.', 'travelio' ); ?></p>
+            </div>
+            <div class="tv-feature tv-feature--highlight">
+                <div class="tv-feature-icon">&#128176;</div>
+                <h3><?php esc_html_e( 'Secure Payment', 'travelio' ); ?></h3>
+                <p><?php esc_html_e( 'Multiple payment options with SSL encrypted transactions.', 'travelio' ); ?></p>
+            </div>
+            <div class="tv-feature tv-feature--highlight">
+                <div class="tv-feature-icon">&#128275;</div>
+                <h3><?php esc_html_e( 'Free Cancellation', 'travelio' ); ?></h3>
+                <p><?php esc_html_e( 'Flexible cancellation policy on selected tours.', 'travelio' ); ?></p>
+            </div>
+            <?php endif; ?>
         </div>
     </div>
 </section>
 
-<!-- CTA Banner -->
+<!-- CTA Banner with Checkout Link -->
 <section class="tv-cta-banner">
     <div class="tv-container">
         <h2><?php esc_html_e( 'Ready to start your next adventure?', 'travelio' ); ?></h2>
         <p><?php esc_html_e( 'Talk to one of our travel designers and get a tailor-made itinerary in 24 hours.', 'travelio' ); ?></p>
-        <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="tv-btn tv-btn--primary"><?php esc_html_e( 'Plan my trip', 'travelio' ); ?></a>
+        <div class="tv-cta-actions">
+            <a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>" class="tv-btn tv-btn--primary"><?php esc_html_e( 'Plan my trip', 'travelio' ); ?></a>
+            <?php if ( $wte_active ) : ?>
+            <a href="<?php echo esc_url( wc_get_checkout_url() ?: home_url( '/checkout/' ) ); ?>" class="tv-btn tv-btn--ghost"><?php esc_html_e( 'Checkout My Trips', 'travelio' ); ?></a>
+            <?php endif; ?>
+        </div>
     </div>
 </section>
 

@@ -1,101 +1,104 @@
-# Travelio — Installation & Setup Guide
+# Travelio Theme - Installation & Setup Guide
 
-A modern, original travel/tour WordPress theme. Warm orange + dark navy palette, custom post types for Tours & Destinations, WP Travel Engine compatible.
+## Overview
+Travelio is a modern travel & tour WordPress theme inspired by Travila, featuring full integration with WP Travel Engine (FREE) for booking functionality.
 
-## 1. Install the theme
+## Required Plugins
 
-You have two options:
+### 1. WP Travel Engine (FREE) - **RECOMMENDED**
+This is the core plugin that powers trip booking functionality.
 
-### Option A — Upload as a zip (recommended)
-1. Zip the `travelio` folder so that the zip contains `travelio/style.css` at its root.
-2. In WordPress admin: **Appearance → Themes → Add New → Upload Theme**.
-3. Choose the zip and click **Install Now**, then **Activate**.
+**Installation:**
+1. Go to WordPress Admin → Plugins → Add New
+2. Search for "WP Travel Engine"
+3. Install and Activate
 
-### Option B — Copy via FTP / file manager
-Copy the entire `travelio` folder into `/wp-content/themes/` on your server. Then activate it from **Appearance → Themes**.
+**OR manually:**
+- Download from: https://wordpress.org/plugins/wp-travel-engine/
+- Upload via WordPress Admin → Plugins → Add New → Upload Plugin
 
-## 2. First-run configuration
+### 2. WooCommerce (Optional but Recommended)
+Enables payment processing and checkout functionality.
 
-After activating, do these in order:
+**Installation:**
+1. Go to WordPress Admin → Plugins → Add New
+2. Search for "WooCommerce"
+3. Install and Activate
 
-1. **Permalinks** — Go to *Settings → Permalinks* and click **Save Changes** once. This refreshes URLs so the new `tour_package` and `destination` post types route correctly.
-2. **Menus** — *Appearance → Menus*. Create a menu, add Home / Tours / Destinations / Blog / About / Contact, then assign it to the **Primary Menu** location.
-3. **Customizer** — *Appearance → Customize*:
-   - **Site Identity**: upload your logo (recommended 200×60).
-   - **Hero Section**: set hero title, accent word, subtitle, and upload a background image (1920×1080).
-   - **Contact & Footer**: phone, email, address, social URLs, footer text.
+## Theme Features
 
-## 3. Add your content
+### Homepage Features (Travila-style)
+- **Hero Section** with advanced search including:
+  - Destination search
+  - Check-in / Check-out date pickers
+  - Number of travelers selector
+  - Advanced filters (Tour Type, Duration, Price Range, Difficulty)
+  
+- **Stats Counter** showing destinations, packages, travelers, experience
 
-### Tours (Tour Packages)
-*Tours → Add New*. Each tour has standard fields plus a **Tour Details** box for:
-- Price, Duration, Group Size, Location, Rating
-- Featured badge toggle
-- "What's included" and "What's NOT included" (HTML lists)
+- **Destinations Grid** - Top destinations with hover effects
 
-Set a featured image (1200×800 works best).
+- **Featured Tour Packages** with:
+  - WTE integration for bookable trips
+  - "Book Now" buttons linking to checkout
+  - Price, duration, and rating display
+  - Featured badges
 
-### Destinations
-*Destinations → Add New*. Title + featured image + description. Tours linked by matching the destination name in the tour's **Location** field will appear on each destination page.
+- **Why Choose Us** section with WTE features:
+  - Instant Confirmation
+  - E-Voucher Ready
+  - Secure Payment
+  - Free Cancellation
 
-### Blog posts
-Standard *Posts → Add New*. Set a featured image for the best card layout.
+- **CTA Banner** with "Checkout My Trips" button (when WTE active)
 
-## 4. (Optional) WP Travel Engine
+- **Testimonials** slider
 
-If you need real bookings and payments, install **WP Travel Engine** (free, from the WordPress plugin directory). Travelio detects it automatically:
-- Its booking form renders inside the tour single-page booking card (replaces the simple inquiry form).
-- If you create a WP Travel Engine "trip" with the same title as a Travelio tour, the tour URL redirects to the trip URL.
+- **Blog Section**
 
-## 5. Tweaks & customization
+### WP Travel Engine Integration
+- Automatic detection of WTE plugin
+- Uses `trip` post type when WTE is active
+- Falls back to `tour_package` CPT when WTE is not installed
+- Checkout link in header and CTA sections
+- Booking form shortcode: `[travelio_booking]`
 
-All colors and fonts are CSS variables at the top of `style.css`:
+## Setup Instructions
 
-```css
-:root{
-  --tv-orange: #FF7A2D;
-  --tv-navy:   #0B2545;
-  --tv-font-body: 'Inter', sans-serif;
-  --tv-font-head: 'Poppins', sans-serif;
-}
-```
+### Step 1: Install Theme
+1. Upload the theme folder to `/wp-content/themes/`
+2. Activate via WordPress Admin → Appearance → Themes
 
-Change those values and the whole theme reskins.
+### Step 2: Install Required Plugins
+After activation, you'll see a notice recommending WP Travel Engine installation.
 
-The homepage layout lives in `front-page.php` — duplicate or remove sections (hero, destinations, packages, features, CTA, testimonials, blog) freely.
+### Step 3: Create Content
+1. **Add Destinations**: Go to Destinations → Add New
+2. **Add Tours/Trips**: 
+   - With WTE: Go to Trip → Add New
+   - Without WTE: Go to Tours → Add New Tour
 
-## File structure
+### Step 4: Configure Homepage
+1. Go to Settings → Reading
+2. Set "Your homepage displays" to "A static page"
+3. Select your homepage (create one with front-page.php template)
 
-```
-travelio/
-├── style.css                 ← theme header + all CSS
-├── functions.php             ← setup, enqueues, helpers
-├── header.php / footer.php
-├── front-page.php            ← the homepage
-├── index.php / page.php / single.php / archive.php / 404.php
-├── single-tour_package.php
-├── archive-tour_package.php
-├── single-destination.php
-├── archive-destination.php
-├── searchform.php / sidebar.php / comments.php
-├── inc/
-│   ├── custom-post-types.php ← Tours, Destinations, meta boxes
-│   ├── customizer.php        ← Customizer panels
-│   ├── template-tags.php     ← menu fallback
-│   └── wte-integration.php   ← WP Travel Engine hooks
-├── template-parts/
-│   ├── content.php           ← blog card
-│   ├── content-tour.php      ← tour card
-│   └── content-destination.php
-├── assets/js/main.js
-├── readme.txt
-└── INSTALL.md (this file)
-```
+### Step 5: Customize
+Go to Appearance → Customize to modify:
+- Hero title and subtitle
+- Colors and branding
+- Contact information
+- Phone number
 
-## Notes on placeholder images
+## Checkout Integration
+When WP Travel Engine is active:
+- "Book Now" buttons link directly to trip booking pages
+- "Checkout My Trips" button appears in CTA section
+- Booking forms are integrated with WooCommerce checkout
 
-When you have no featured image set, the theme requests a topical placeholder from `source.unsplash.com` so the homepage isn't empty during setup. Replace these with real featured images as you publish content — they're meant as scaffolding only.
+## Shortcodes Available
+- `[travelio_booking]` - Displays WTE booking form
 
-## Licensing
-
-The theme code is original, released under the GNU GPL v2 or later. No proprietary code, images, or trademarks from other commercial themes are included.
+## Support
+For theme support, please contact the theme developer.
+For WP Travel Engine support, visit: https://wptravelengine.com/support/

@@ -172,3 +172,64 @@ function travelio_meta( $key, $default = '' ) {
     $v = get_post_meta( get_the_ID(), $key, true );
     return $v ? $v : $default;
 }
+
+/**
+ * Enhanced WTE Integration - Add checkout link to header
+ */
+function travelio_add_checkout_to_header() {
+    if ( ! class_exists( 'Wp_Travel_Engine' ) && ! post_type_exists( 'trip' ) ) { return; }
+    
+    // Add checkout URL to theme mods for easy access
+    if ( function_exists( 'wc_get_checkout_url' ) ) {
+        return wc_get_checkout_url();
+    }
+    return home_url( '/checkout/' );
+}
+
+/**
+ * Register recommended plugins including WP Travel Engine
+ */
+function travelio_recommended_plugins( $plugins ) {
+    $plugins[] = array(
+        'name'      => 'WP Travel Engine',
+        'slug'      => 'wp-travel-engine',
+        'required'  => false,
+        'version'   => '3.0.0',
+    );
+    $plugins[] = array(
+        'name'      => 'WooCommerce',
+        'slug'      => 'woocommerce',
+        'required'  => false,
+    );
+    return $plugins;
+}
+
+/**
+ * Add WTE booking shortcode support
+ */
+function travelio_wte_booking_shortcode() {
+    if ( ! class_exists( 'Wp_Travel_Engine' ) ) { return ''; }
+    return '[wte_trip_booking_form]';
+}
+add_shortcode( 'travelio_booking', 'travelio_wte_booking_shortcode' );
+
+/**
+ * Enqueue date picker for search
+ */
+function travelio_enqueue_datepicker() {
+    wp_enqueue_style( 'jquery-ui', 'https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css', array(), null );
+    wp_enqueue_script( 'jquery-ui-datepicker', array( 'jquery', 'jquery-ui-core' ), null, true );
+    
+    $script = "
+    jQuery(function($) {
+        $('.tv-date-picker').datepicker({
+            dateFormat: 'yy-mm-dd',
+            minDate: 0,
+            numberOfMonths: 2,
+            showButtonPanel: true
+        });
+    });
+    ";
+    wp_add_inline_script( 'jquery-ui-datepicker', $script );
+}
+add_action( 'wp_enqueue_scripts', 'travelio_enqueue_datepicker' );
