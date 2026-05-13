@@ -233,3 +233,10 @@ function travelio_enqueue_datepicker() {
     wp_add_inline_script( 'jquery-ui-datepicker', $script );
 }
 add_action( 'wp_enqueue_scripts', 'travelio_enqueue_datepicker' );
+
+/**
+ * Include Demo Importer
+ */
+if ( is_admin() ) {
+    require_once TRAVELIO_DIR . '/includes/demo-importer.php';
+}

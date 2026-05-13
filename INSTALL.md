@@ -75,19 +75,17 @@ After activation, you'll see a notice recommending WP Travel Engine installation
 ### Step 3: Install Demo Content (Optional but Recommended) ⭐
 **To make your site look full like the demo:**
 
-1. Navigate to your theme folder: `/wp-content/themes/travelio/`
-2. Access the demo importer via browser:
-   ```
-   https://yoursite.com/wp-content/themes/travelio/setup-demo.php
-   ```
-3. Wait for "Installation Complete" message
-4. **IMPORTANT:** Delete `setup-demo.php` immediately after use for security
+1. Go to WordPress Admin → Appearance → Themes
+2. Look for **"Import Demo Content"** submenu under Themes
+3. Click the button **"🚀 Import Demo Content Now"**
+4. Wait for success message
 
 **What the demo importer adds:**
-- ✅ 6 ready-to-use trips/tours with images, prices, and locations
-- ✅ Homepage set as front page
-- ✅ Pages: About Us, Contact, My Bookings
-- ✅ Primary Navigation Menu
+- ✅ 6 ready-to-use trips/tours with images, prices, and locations (Paris, Tokyo, NYC, Bali, Rome, Dubai)
+- ✅ 6 Destinations with descriptions and featured images
+- ✅ Pages: About Us, Contact, FAQ
+- ✅ Primary Navigation Menu automatically configured
+- ✅ All content properly linked and formatted
 
 ### Step 4: Create Content
 1. **Add Destinations**: Go to Destinations → Add New
