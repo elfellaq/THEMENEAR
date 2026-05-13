@@ -12,21 +12,26 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  */
 function travelio_register_cpts() {
 
-    register_post_type( 'tour_package', array(
-        'labels' => array(
-            'name'               => __( 'Tour Packages', 'travelio' ),
-            'singular_name'      => __( 'Tour Package', 'travelio' ),
-            'add_new_item'       => __( 'Add new tour', 'travelio' ),
-            'edit_item'          => __( 'Edit tour', 'travelio' ),
-            'menu_name'          => __( 'Tours', 'travelio' ),
-        ),
-        'public'        => true,
-        'has_archive'   => 'tours',
-        'rewrite'       => array( 'slug' => 'tour' ),
-        'show_in_rest'  => true,
-        'menu_icon'     => 'dashicons-palmtree',
-        'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
-    ) );
+    // Only register if WP Travel Engine is not active
+    $wte_active = class_exists('WPTrip_Summary') || class_exists('Wp_Travel_Engine');
+    
+    if (!$wte_active) {
+        register_post_type( 'tour_package', array(
+            'labels' => array(
+                'name'               => __( 'Tour Packages', 'travelio' ),
+                'singular_name'      => __( 'Tour Package', 'travelio' ),
+                'add_new_item'       => __( 'Add new tour', 'travelio' ),
+                'edit_item'          => __( 'Edit tour', 'travelio' ),
+                'menu_name'          => __( 'Tours', 'travelio' ),
+            ),
+            'public'        => true,
+            'has_archive'   => 'tours',
+            'rewrite'       => array( 'slug' => 'tour' ),
+            'show_in_rest'  => true,
+            'menu_icon'     => 'dashicons-palmtree',
+            'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt', 'comments' ),
+        ) );
+    }
 
     register_post_type( 'destination', array(
         'labels' => array(
@@ -44,14 +49,16 @@ function travelio_register_cpts() {
         'supports'      => array( 'title', 'editor', 'thumbnail', 'excerpt' ),
     ) );
 
-    // Taxonomies.
-    register_taxonomy( 'tour_type', 'tour_package', array(
-        'label'        => __( 'Tour Types', 'travelio' ),
-        'public'       => true,
-        'hierarchical' => true,
-        'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => 'tour-type' ),
-    ) );
+    // Taxonomies - only if WTE not active
+    if (!$wte_active) {
+        register_taxonomy( 'tour_type', 'tour_package', array(
+            'label'        => __( 'Tour Types', 'travelio' ),
+            'public'       => true,
+            'hierarchical' => true,
+            'show_in_rest' => true,
+            'rewrite'      => array( 'slug' => 'tour-type' ),
+        ) );
+    }
 }
 add_action( 'init', 'travelio_register_cpts' );
 
@@ -59,7 +66,12 @@ add_action( 'init', 'travelio_register_cpts' );
  * Meta boxes for Tour Package details.
  */
 function travelio_meta_boxes() {
-    add_meta_box( 'tv_tour_details', __( 'Tour Details', 'travelio' ), 'travelio_tour_meta_cb', 'tour_package', 'normal', 'high' );
+    // Only add meta box if WTE is not active
+    $wte_active = class_exists('WPTrip_Summary') || class_exists('Wp_Travel_Engine');
+    
+    if (!$wte_active) {
+        add_meta_box( 'tv_tour_details', __( 'Tour Details', 'travelio' ), 'travelio_tour_meta_cb', 'tour_package', 'normal', 'high' );
+    }
 }
 add_action( 'add_meta_boxes', 'travelio_meta_boxes' );
 
@@ -104,6 +116,10 @@ function travelio_tour_meta_cb( $post ) {
 }
 
 function travelio_save_tour_meta( $post_id ) {
+    // Only save if WTE is not active
+    $wte_active = class_exists('WPTrip_Summary') || class_exists('Wp_Travel_Engine');
+    if ($wte_active) { return; }
+    
     if ( ! isset( $_POST['tv_tour_nonce'] ) || ! wp_verify_nonce( $_POST['tv_tour_nonce'], 'tv_tour_save' ) ) { return; }
     if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) { return; }
     if ( ! current_user_can( 'edit_post', $post_id ) ) { return; }
