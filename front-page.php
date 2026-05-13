@@ -159,7 +159,7 @@ $wte_active = class_exists( 'Wp_Travel_Engine' ) || post_type_exists( 'trip' );
                         <?php if ( has_post_thumbnail() ) {
                             the_post_thumbnail( 'travelio-dest' );
                         } else { ?>
-                            <img src="https://source.unsplash.com/600x800/?<?php echo esc_attr( sanitize_title( get_the_title() ) ); ?>,travel" alt="<?php the_title_attribute(); ?>">
+                            <img src="https://picsum.photos/600/800?random=<?php echo esc_attr( get_the_ID() ); ?>&travel" alt="<?php the_title_attribute(); ?>">
                         <?php } ?>
                         <div class="tv-dest-body">
                             <h3><?php the_title(); ?></h3>
@@ -179,7 +179,7 @@ $wte_active = class_exists( 'Wp_Travel_Engine' ) || post_type_exists( 'trip' );
                 );
                 foreach ( $placeholders as $p ) : ?>
                     <a class="tv-dest" href="#">
-                        <img src="https://source.unsplash.com/600x800/?<?php echo esc_attr( $p[1] ); ?>" alt="<?php echo esc_attr( $p[0] ); ?>">
+                        <img src="https://picsum.photos/600/800?random=<?php echo esc_attr( $p[0] ); ?>&travel" alt="<?php echo esc_attr( $p[0] ); ?>">
                         <div class="tv-dest-body">
                             <h3><?php echo esc_html( $p[0] ); ?></h3>
                             <span><?php esc_html_e( 'Explore tours', 'travelio' ); ?></span>
@@ -238,7 +238,7 @@ $wte_active = class_exists( 'Wp_Travel_Engine' ) || post_type_exists( 'trip' );
                                 <?php if ( has_post_thumbnail() ) {
                                     the_post_thumbnail( 'travelio-card' );
                                 } else { ?>
-                                    <img src="https://source.unsplash.com/600x450/?travel,<?php echo esc_attr( sanitize_title( get_the_title() ) ); ?>" alt="<?php the_title_attribute(); ?>">
+                                    <img src="https://picsum.photos/600/450?random=<?php echo esc_attr( get_the_ID() ); ?>&travel" alt="<?php the_title_attribute(); ?>">
                                 <?php } ?>
                                 <span class="tv-card-badge"><?php esc_html_e( 'Featured', 'travelio' ); ?></span>
                                 <?php if ( $wte_active ) { ?>
@@ -280,7 +280,7 @@ $wte_active = class_exists( 'Wp_Travel_Engine' ) || post_type_exists( 'trip' );
                 foreach ( $placeholders as $p ) : ?>
                     <article class="tv-card">
                         <div class="tv-card-media">
-                            <img src="https://source.unsplash.com/600x450/?<?php echo esc_attr( $p[4] ); ?>" alt="<?php echo esc_attr( $p[0] ); ?>">
+                            <img src="https://picsum.photos/600/450?random=<?php echo esc_attr( $p[0] ); ?>&travel" alt="<?php echo esc_attr( $p[0] ); ?>">
                             <span class="tv-card-badge"><?php esc_html_e( 'Featured', 'travelio' ); ?></span>
                         </div>
                         <div class="tv-card-body">
@@ -420,7 +420,7 @@ if ( $posts_q->have_posts() ) : ?>
                 <article class="tv-post">
                     <a href="<?php the_permalink(); ?>" class="tv-post-media">
                         <?php if ( has_post_thumbnail() ) { the_post_thumbnail( 'travelio-card' ); }
-                        else { ?><img src="https://source.unsplash.com/600x400/?travel,blog,<?php echo esc_attr( get_the_ID() ); ?>" alt=""><?php } ?>
+                        else { ?><img src="https://picsum.photos/600/400?random=<?php echo esc_attr( get_the_ID() ); ?>&travel" alt=""><?php } ?>
                     </a>
                     <div class="tv-post-body">
                         <div class="tv-post-meta"><?php echo esc_html( get_the_date() ); ?> &middot; <?php the_category( ', ' ); ?></div>
