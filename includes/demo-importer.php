@@ -281,8 +281,8 @@ class Travelio_Demo_Importer {
     
     public function render_admin_page() {
         if (isset($_GET['imported'])) {
-            $imported_data = stripslashes($_GET['imported']);
-            $imported = json_decode($imported_data, true);
+            $imported_data = isset($_GET['imported']) ? stripslashes($_GET['imported']) : '';
+            $imported = !empty($imported_data) ? json_decode($imported_data, true) : null;
             
             echo '<div class="notice notice-success"><p><strong>Demo content imported successfully!</strong></p>';
             
@@ -292,7 +292,7 @@ class Travelio_Demo_Importer {
                 $pages = isset($imported['pages']) ? intval($imported['pages']) : 0;
                 echo '<p>Tours: ' . $tours . ' | Destinations: ' . $destinations . ' | Pages: ' . $pages . '</p>';
             } else {
-                echo '<p>Import completed. Please check your content.</p>';
+                echo '<p>Import completed. Please check your content in Trips or Tour Packages.</p>';
             }
             
             echo '<p><a href="' . home_url() . '" target="_blank" class="button button-primary">View Your Site</a></p></div>';
