@@ -1,0 +1,97 @@
+/* ============================================================
+   NearTrips — Design Tokens
+   Light mode defaults; [data-theme="dark"] overrides below.
+   ============================================================ */
+
+:root {
+  /* Brand */
+  --nt-primary:        #FF7A2D;
+  --nt-primary-dark:   #E5631A;
+  --nt-primary-rgb:    255, 122, 45;
+  --nt-navy:           #0B2545;
+  --nt-navy-2:         #13315C;
+  --nt-yellow:         #FFC857;
+  --nt-success:        #22C55E;
+  --nt-danger:         #EF4444;
+
+  /* Surfaces */
+  --nt-bg:             #FFFFFF;
+  --nt-bg-soft:        #F7F8FA;
+  --nt-bg-card:        #FFFFFF;
+  --nt-border:         #E5E7EB;
+
+  /* Text */
+  --nt-text:           #1F2937;
+  --nt-text-muted:     #6B7280;
+  --nt-text-heading:   #0B2545;
+  --nt-text-light:     #FFFFFF;
+
+  /* Shadows */
+  --nt-shadow-sm:      0 4px 12px rgba(11,37,69,.06);
+  --nt-shadow:         0 10px 30px rgba(11,37,69,.08);
+  --nt-shadow-lg:      0 20px 50px rgba(11,37,69,.15);
+  --nt-shadow-btn:     0 10px 25px rgba(255,122,45,.35);
+
+  /* Radius */
+  --nt-radius:         14px;
+  --nt-radius-sm:      8px;
+  --nt-radius-xs:      6px;
+  --nt-radius-full:    9999px;
+
+  /* Spacing scale */
+  --nt-space-1:        4px;
+  --nt-space-2:        8px;
+  --nt-space-3:        12px;
+  --nt-space-4:        16px;
+  --nt-space-5:        20px;
+  --nt-space-6:        24px;
+  --nt-space-8:        32px;
+  --nt-space-10:       40px;
+  --nt-space-12:       48px;
+  --nt-space-16:       64px;
+  --nt-space-20:       80px;
+  --nt-space-24:       96px;
+
+  /* Typography */
+  --nt-font-head:      'Poppins', 'Inter', sans-serif;
+  --nt-font-body:      'Inter', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+
+  --nt-fs-xs:          clamp(.75rem,   1vw,   .875rem);
+  --nt-fs-sm:          clamp(.875rem,  1.2vw, 1rem);
+  --nt-fs-base:        clamp(1rem,     1.5vw, 1.125rem);
+  --nt-fs-lg:          clamp(1.125rem, 2vw,   1.375rem);
+  --nt-fs-xl:          clamp(1.375rem, 2.5vw, 1.75rem);
+  --nt-fs-2xl:         clamp(1.75rem,  3vw,   2.25rem);
+  --nt-fs-3xl:         clamp(2.25rem,  4vw,   3rem);
+  --nt-fs-hero:        clamp(2.5rem,   6vw,   4.5rem);
+
+  /* Layout */
+  --nt-container:      1200px;
+  --nt-header-h:       80px;
+
+  /* Transitions */
+  --nt-transition:     .2s ease;
+  --nt-transition-md:  .35s cubic-bezier(.4,0,.2,1);
+
+  /* Z-index */
+  --nt-z-header:       100;
+  --nt-z-overlay:      200;
+  --nt-z-modal:        300;
+  --nt-z-toast:        400;
+}
+
+/* ── Dark mode token overrides ── */
+[data-theme="dark"] {
+  --nt-bg:             #0F172A;
+  --nt-bg-soft:        #1E293B;
+  --nt-bg-card:        #1E293B;
+  --nt-border:         #334155;
+
+  --nt-text:           #F1F5F9;
+  --nt-text-muted:     #94A3B8;
+  --nt-text-heading:   #F1F5F9;
+
+  --nt-shadow-sm:      0 4px 12px rgba(0,0,0,.3);
+  --nt-shadow:         0 10px 30px rgba(0,0,0,.35);
+  --nt-shadow-lg:      0 20px 50px rgba(0,0,0,.45);
+}

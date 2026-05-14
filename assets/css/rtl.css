@@ -1,0 +1,70 @@
+/* ============================================================
+   NearTrips — RTL Support (Arabic + Right-to-left)
+   Applied when <html dir="rtl"> or body.rtl
+   ============================================================ */
+
+[dir="rtl"],
+.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+/* ── Header ── */
+[dir="rtl"] .nt-header-inner { flex-direction: row-reverse; }
+[dir="rtl"] .nt-nav > ul { flex-direction: row-reverse; }
+[dir="rtl"] .nt-mega-menu { inset-inline-start: auto; inset-inline-end: 0; }
+[dir="rtl"] .nt-offcanvas { inset-inline-start: auto; inset-inline-end: 0; transform: translateX(100%); }
+[dir="rtl"] .nt-offcanvas.is-open { transform: translateX(0); }
+
+/* ── Swiper RTL ── */
+[dir="rtl"] .swiper { direction: rtl; }
+
+/* ── Card badge position ── */
+[dir="rtl"] .nt-card__badge { inset-inline-start: auto; inset-inline-end: var(--nt-space-3); }
+
+/* ── Notice border ── */
+[dir="rtl"] .nt-notice { border-inline-start: none; border-inline-end: 4px solid; }
+
+/* ── Select arrow ── */
+[dir="rtl"] .nt-select {
+  background-position: left 14px center;
+  padding-right: var(--nt-space-4);
+  padding-left: 38px;
+}
+
+/* ── Search widget icon ── */
+[dir="rtl"] .nt-search-field-icon { inset-inline-start: auto; inset-inline-end: 14px; }
+
+/* ── Booking steps ── */
+[dir="rtl"] .nt-booking-steps { flex-direction: row-reverse; }
+[dir="rtl"] .nt-booking-step-line { left: auto; right: 0; }
+
+/* ── Typography adjustments ── */
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6 {
+  letter-spacing: 0; /* Arabic doesn't use letter-spacing */
+}
+[dir="rtl"] .nt-eyebrow { letter-spacing: 0; }
+
+/* ── Footer ── */
+[dir="rtl"] .nt-footer-grid { direction: rtl; }
+[dir="rtl"] .nt-footer-social { flex-direction: row-reverse; }
+
+/* ── Icon flips (arrows, chevrons) ── */
+[dir="rtl"] .nt-icon-arrow,
+[dir="rtl"] .nt-icon-chevron-right,
+[dir="rtl"] .nt-icon-back {
+  transform: scaleX(-1);
+}
+
+/* ── Arabic font enhancement ── */
+[dir="rtl"] body,
+[dir="rtl"] .nt-btn,
+[dir="rtl"] .nt-input,
+[dir="rtl"] .nt-select {
+  font-family: 'Cairo', 'Tajawal', var(--nt-font-body);
+}

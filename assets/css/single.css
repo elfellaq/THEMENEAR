@@ -1,0 +1,239 @@
+/* ============================================================
+   NearTrips — Single Tour / Hotel / Activity Page
+   ============================================================ */
+
+/* ── Page hero breadcrumb ── */
+.nt-page-hero {
+  background: var(--nt-bg-soft);
+  padding: calc(var(--nt-header-h) + var(--nt-space-8)) 0 var(--nt-space-8);
+  border-bottom: 1px solid var(--nt-border);
+}
+.nt-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+  font-size: var(--nt-fs-xs);
+  color: var(--nt-text-muted);
+  margin-bottom: var(--nt-space-4);
+  flex-wrap: wrap;
+}
+.nt-breadcrumb a { color: var(--nt-text-muted); }
+.nt-breadcrumb a:hover { color: var(--nt-primary); }
+.nt-breadcrumb span { color: var(--nt-text); font-weight: 600; }
+.nt-breadcrumb-sep { opacity: .4; }
+
+/* ── Single header ── */
+.nt-single-header { margin-bottom: var(--nt-space-8); }
+.nt-single-header__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--nt-space-4);
+  margin-bottom: var(--nt-space-3);
+}
+.nt-single-header__title { font-size: var(--nt-fs-3xl); margin-bottom: var(--nt-space-4); }
+.nt-single-header__actions { display: flex; gap: var(--nt-space-2); }
+.nt-single-action-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--nt-border);
+  background: var(--nt-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nt-text-muted);
+  cursor: pointer;
+  transition: all var(--nt-transition);
+}
+.nt-single-action-btn:hover { border-color: var(--nt-primary); color: var(--nt-primary); }
+
+/* ── Gallery ── */
+.nt-gallery-wrap { border-radius: var(--nt-radius); overflow: hidden; margin-bottom: var(--nt-space-8); }
+.nt-gallery-main { border-radius: var(--nt-radius) var(--nt-radius) 0 0; overflow: hidden; }
+.nt-gallery-main img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+.nt-gallery-thumbs { margin-top: var(--nt-space-2); }
+.nt-gallery-thumbs .swiper-slide {
+  border-radius: var(--nt-radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  opacity: .6;
+  transition: opacity var(--nt-transition);
+}
+.nt-gallery-thumbs .swiper-slide-thumb-active { opacity: 1; outline: 2px solid var(--nt-primary); }
+.nt-gallery-thumbs img { aspect-ratio: 4/3; width: 100%; object-fit: cover; }
+
+/* ── Tour key info strip ── */
+.nt-tour-info-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--nt-space-4);
+  background: var(--nt-bg-soft);
+  border-radius: var(--nt-radius);
+  padding: var(--nt-space-5);
+  margin-bottom: var(--nt-space-8);
+}
+.nt-info-item { display: flex; flex-direction: column; gap: 4px; }
+.nt-info-label {
+  font-size: var(--nt-fs-xs);
+  color: var(--nt-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  font-weight: 600;
+}
+.nt-info-value {
+  font-size: var(--nt-fs-sm);
+  font-weight: 700;
+  color: var(--nt-text-heading);
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-1);
+}
+
+/* ── Single content layout ── */
+.nt-single-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: var(--nt-space-8);
+  align-items: start;
+}
+.nt-single-content {}
+.nt-single-sidebar {}
+
+/* ── Tab navigation ── */
+.nt-tabs { margin-bottom: var(--nt-space-8); }
+.nt-tabs-nav {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--nt-border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: var(--nt-space-6);
+}
+.nt-tabs-nav::-webkit-scrollbar { display: none; }
+.nt-tab-btn {
+  flex-shrink: 0;
+  padding: var(--nt-space-3) var(--nt-space-5);
+  font-size: var(--nt-fs-sm);
+  font-weight: 600;
+  color: var(--nt-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  transition: color var(--nt-transition), border-color var(--nt-transition);
+  white-space: nowrap;
+}
+.nt-tab-btn:hover { color: var(--nt-primary); }
+.nt-tab-btn.is-active { color: var(--nt-primary); border-bottom-color: var(--nt-primary); }
+.nt-tab-panel[hidden] { display: none; }
+
+/* ── Accordion (FAQ) ── */
+.nt-accordion { display: flex; flex-direction: column; gap: var(--nt-space-3); }
+.nt-accordion-item {
+  background: var(--nt-bg-card);
+  border: 1.5px solid var(--nt-border);
+  border-radius: var(--nt-radius-sm);
+  overflow: hidden;
+}
+.nt-accordion-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--nt-space-4) var(--nt-space-5);
+  font-size: var(--nt-fs-base);
+  font-weight: 600;
+  color: var(--nt-text-heading);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: start;
+  gap: var(--nt-space-3);
+}
+.nt-accordion-toggle svg { flex-shrink: 0; transition: transform var(--nt-transition); }
+.nt-accordion-item.is-open .nt-accordion-toggle svg { transform: rotate(180deg); }
+.nt-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s cubic-bezier(.4,0,.2,1);
+}
+.nt-accordion-inner {
+  padding: 0 var(--nt-space-5) var(--nt-space-5);
+  font-size: var(--nt-fs-sm);
+  color: var(--nt-text-muted);
+  line-height: 1.7;
+}
+
+/* ── Reviews ── */
+.nt-reviews-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-8);
+  background: var(--nt-bg-soft);
+  border-radius: var(--nt-radius);
+  padding: var(--nt-space-6);
+  margin-bottom: var(--nt-space-6);
+}
+.nt-reviews-big {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--nt-space-2);
+  flex-shrink: 0;
+}
+.nt-reviews-big-num {
+  font-family: var(--nt-font-head);
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--nt-text-heading);
+  line-height: 1;
+}
+.nt-reviews-breakdown { flex: 1; display: flex; flex-direction: column; gap: var(--nt-space-2); }
+.nt-review-bar {
+  display: grid;
+  grid-template-columns: 60px 1fr 40px;
+  gap: var(--nt-space-2);
+  align-items: center;
+  font-size: var(--nt-fs-xs);
+  color: var(--nt-text-muted);
+}
+.nt-review-bar-track {
+  background: var(--nt-border);
+  border-radius: var(--nt-radius-full);
+  height: 6px;
+  overflow: hidden;
+}
+.nt-review-bar-fill {
+  height: 100%;
+  background: var(--nt-yellow);
+  border-radius: var(--nt-radius-full);
+}
+
+.nt-review-card {
+  background: var(--nt-bg-card);
+  border: 1px solid var(--nt-border);
+  border-radius: var(--nt-radius);
+  padding: var(--nt-space-5);
+  margin-bottom: var(--nt-space-4);
+}
+.nt-review-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--nt-space-3);
+}
+.nt-review-card__author { display: flex; align-items: center; gap: var(--nt-space-3); }
+.nt-review-card__avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+.nt-review-card__name { font-weight: 700; font-size: var(--nt-fs-sm); color: var(--nt-text-heading); }
+.nt-review-card__date { font-size: var(--nt-fs-xs); color: var(--nt-text-muted); }
+.nt-review-card__body { font-size: var(--nt-fs-sm); color: var(--nt-text); line-height: 1.7; }
+
+@media (max-width: 1023px) {
+  .nt-single-layout { grid-template-columns: 1fr; }
+  .nt-booking-sidebar { position: static; }
+}
+@media (max-width: 599px) {
+  .nt-reviews-summary { flex-direction: column; align-items: flex-start; }
+}

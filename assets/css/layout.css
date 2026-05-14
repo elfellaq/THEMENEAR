@@ -1,0 +1,86 @@
+/* ============================================================
+   NearTrips — Layout System
+   ============================================================ */
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; }
+img, video { max-width: 100%; height: auto; display: block; }
+button { font-family: inherit; cursor: pointer; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+input, textarea, select { font-family: inherit; }
+
+/* Container */
+.nt-container {
+  max-width: var(--nt-container);
+  margin-inline: auto;
+  padding-inline: var(--nt-space-5);
+}
+.nt-container--wide  { max-width: 1400px; margin-inline: auto; padding-inline: var(--nt-space-5); }
+.nt-container--narrow { max-width: 860px; margin-inline: auto; padding-inline: var(--nt-space-5); }
+
+/* Section spacing */
+.nt-section { padding-block: var(--nt-space-20); }
+.nt-section--sm { padding-block: var(--nt-space-12); }
+.nt-section--lg { padding-block: var(--nt-space-24); }
+.nt-section--soft { background: var(--nt-bg-soft); }
+.nt-section--dark { background: var(--nt-navy); color: #fff; }
+.nt-section--navy2 { background: var(--nt-navy-2); color: #fff; }
+
+/* Grid helpers */
+.nt-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--nt-space-6); }
+.nt-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--nt-space-6); }
+.nt-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--nt-space-6); }
+.nt-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--nt-space-6);
+}
+
+/* Flex helpers */
+.nt-flex        { display: flex; }
+.nt-flex-center { display: flex; align-items: center; justify-content: center; }
+.nt-flex-between { display: flex; align-items: center; justify-content: space-between; }
+.nt-flex-col    { display: flex; flex-direction: column; }
+.nt-gap-2       { gap: var(--nt-space-2); }
+.nt-gap-3       { gap: var(--nt-space-3); }
+.nt-gap-4       { gap: var(--nt-space-4); }
+.nt-gap-6       { gap: var(--nt-space-6); }
+
+/* Responsive grid breakdowns */
+@media (max-width: 1023px) {
+  .nt-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .nt-grid-2,
+  .nt-grid-3,
+  .nt-grid-4 { grid-template-columns: 1fr; }
+  .nt-section { padding-block: var(--nt-space-12); }
+}
+@media (max-width: 479px) {
+  .nt-container,
+  .nt-container--wide,
+  .nt-container--narrow { padding-inline: var(--nt-space-4); }
+}
+
+/* Utility: visually hidden but accessible */
+.nt-visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Overlay */
+.nt-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: var(--nt-z-overlay);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--nt-transition-md), visibility var(--nt-transition-md);
+}
+.nt-overlay.is-active { opacity: 1; visibility: visible; }

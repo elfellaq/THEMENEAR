@@ -1,0 +1,13 @@
+{
+  "name": "themenear",
+  "version": "1.0.0",
+  "description": "NearTrips — Premium Travel Booking WordPress Theme",
+  "scripts": {
+    "dev": "tailwindcss -i ./assets/css/src/tailwind.css -o ./assets/css/tailwind.css --watch",
+    "build": "tailwindcss -i ./assets/css/src/tailwind.css -o ./assets/css/tailwind.min.css --minify",
+    "watch": "npm run dev"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0"
+  }
+}

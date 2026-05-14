@@ -1,0 +1,163 @@
+/* ============================================================
+   NearTrips — Booking Widget & Single Tour Page
+   ============================================================ */
+
+/* ── Booking sidebar card ── */
+.nt-booking-sidebar {
+  background: var(--nt-bg-card);
+  border: 1.5px solid var(--nt-border);
+  border-radius: var(--nt-radius);
+  box-shadow: var(--nt-shadow);
+  overflow: hidden;
+  top: 96px;
+}
+.nt-booking-head {
+  padding: var(--nt-space-5) var(--nt-space-5) var(--nt-space-4);
+  border-bottom: 1px solid var(--nt-border);
+  background: var(--nt-bg-soft);
+}
+.nt-booking-price-label { font-size: var(--nt-fs-xs); color: var(--nt-text-muted); }
+.nt-booking-price-val {
+  font-family: var(--nt-font-head);
+  font-size: var(--nt-fs-2xl);
+  font-weight: 800;
+  color: var(--nt-primary);
+  line-height: 1.2;
+}
+.nt-booking-price-per { font-size: var(--nt-fs-xs); color: var(--nt-text-muted); }
+.nt-booking-body { padding: var(--nt-space-5); display: flex; flex-direction: column; gap: var(--nt-space-4); }
+
+/* ── Qty Stepper ── */
+.nt-qty-wrap {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--nt-border);
+  border-radius: var(--nt-radius-sm);
+  overflow: hidden;
+}
+.nt-qty-btn {
+  width: 42px;
+  height: 42px;
+  background: var(--nt-bg-soft);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nt-text);
+  font-size: 1.2rem;
+  font-weight: 700;
+  transition: background var(--nt-transition), color var(--nt-transition);
+  flex-shrink: 0;
+}
+.nt-qty-btn:hover { background: var(--nt-primary); color: #fff; }
+.nt-qty-input {
+  flex: 1;
+  text-align: center;
+  border: none;
+  padding: 10px 0;
+  font-size: var(--nt-fs-base);
+  font-weight: 700;
+  color: var(--nt-text);
+  background: var(--nt-bg);
+  width: 0; /* flex handles width */
+  outline: none;
+}
+
+/* ── Total row ── */
+.nt-booking-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--nt-space-4);
+  border-top: 1px solid var(--nt-border);
+}
+.nt-booking-total-label { font-weight: 600; color: var(--nt-text-muted); }
+.nt-booking-total-value {
+  font-family: var(--nt-font-head);
+  font-size: var(--nt-fs-xl);
+  font-weight: 800;
+  color: var(--nt-primary);
+}
+
+/* ── Booking includes list ── */
+.nt-booking-meta-list { display: flex; flex-direction: column; gap: var(--nt-space-3); }
+.nt-booking-meta-item {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+  font-size: var(--nt-fs-sm);
+  color: var(--nt-text-muted);
+}
+.nt-booking-meta-item svg { color: var(--nt-primary); flex-shrink: 0; }
+
+/* ── Tour includes / excludes ── */
+.nt-inc-exc { display: grid; grid-template-columns: 1fr 1fr; gap: var(--nt-space-6); }
+.nt-inc-list, .nt-exc-list { display: flex; flex-direction: column; gap: var(--nt-space-2); }
+.nt-inc-list li, .nt-exc-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--nt-space-2);
+  font-size: var(--nt-fs-sm);
+}
+.nt-inc-list li svg { color: var(--nt-success); flex-shrink: 0; }
+.nt-exc-list li svg { color: var(--nt-danger);  flex-shrink: 0; }
+@media (max-width: 599px) { .nt-inc-exc { grid-template-columns: 1fr; } }
+
+/* ── Itinerary / Duration ── */
+.nt-itinerary { display: flex; flex-direction: column; gap: 0; }
+.nt-itinerary-item {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 0 var(--nt-space-4);
+  padding-bottom: var(--nt-space-5);
+  position: relative;
+}
+.nt-itinerary-item:last-child { padding-bottom: 0; }
+.nt-itinerary-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--nt-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.nt-itinerary-dot::after {
+  content: '';
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: calc(100% + var(--nt-space-1));
+  background: var(--nt-border);
+}
+.nt-itinerary-item:last-child .nt-itinerary-dot::after { display: none; }
+.nt-itinerary-content { padding-top: 2px; }
+.nt-itinerary-title { font-weight: 700; font-size: var(--nt-fs-sm); margin-bottom: 4px; color: var(--nt-text-heading); }
+.nt-itinerary-time  { font-size: var(--nt-fs-xs); color: var(--nt-text-muted); }
+.nt-itinerary-desc  { font-size: var(--nt-fs-sm); color: var(--nt-text-muted); margin-top: var(--nt-space-2); }
+
+/* ── Review form ── */
+.nt-review-form { background: var(--nt-bg-soft); border-radius: var(--nt-radius); padding: var(--nt-space-6); }
+.nt-review-rating-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--nt-space-5);
+  margin-bottom: var(--nt-space-5);
+}
+.nt-review-rating-item label {
+  display: block;
+  font-size: var(--nt-fs-xs);
+  font-weight: 600;
+  color: var(--nt-text-muted);
+  margin-bottom: var(--nt-space-2);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.nt-review-stars { display: flex; gap: 4px; cursor: pointer; }
+@media (max-width: 599px) { .nt-review-rating-row { grid-template-columns: 1fr; } }

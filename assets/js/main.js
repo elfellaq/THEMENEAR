@@ -1,78 +1,157 @@
 /**
- * Travelio main script.
- * - Mobile menu toggle
- * - Sticky header on scroll
- * - Tour single-page tab switching
- * - Animated stat counters
+ * NearTrips — Main JS entry point.
+ * Initialises all minor UI pieces not handled by dedicated modules.
  */
-(function () {
+document.addEventListener('DOMContentLoaded', function () {
   'use strict';
 
-  // Mobile nav toggle
-  var toggle = document.querySelector('.tv-menu-toggle');
-  var nav = document.getElementById('tv-nav');
-  if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('is-open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  /* ── Lazy-load images via IntersectionObserver ── */
+  if ('IntersectionObserver' in window) {
+    const lazyImgs = document.querySelectorAll('img[data-src]');
+    const imgObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        const img = entry.target;
+        img.src = img.getAttribute('data-src');
+        if (img.getAttribute('data-srcset')) {
+          img.srcset = img.getAttribute('data-srcset');
+        }
+        img.removeAttribute('data-src');
+        img.removeAttribute('data-srcset');
+        imgObserver.unobserve(img);
+      });
+    }, { rootMargin: '200px' });
+    lazyImgs.forEach(function (img) { imgObserver.observe(img); });
+  }
+
+  /* ── Wishlist / heart toggle ── */
+  document.querySelectorAll('[data-wishlist-toggle]').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      btn.classList.toggle('is-active');
+      const icon = btn.querySelector('svg');
+      if (icon) {
+        icon.setAttribute('fill', btn.classList.contains('is-active') ? 'var(--nt-primary)' : 'none');
+      }
+    });
+  });
+
+  /* ── Back to top ── */
+  const backTop = document.getElementById('nt-back-top');
+  if (backTop) {
+    window.addEventListener('scroll', function () {
+      backTop.hidden = window.scrollY < 400;
+    }, { passive: true });
+    backTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
-  // Sticky header
-  var header = document.getElementById('tv-site-header');
-  if (header) {
-    var onScroll = function () {
-      if (window.scrollY > 80) header.classList.add('is-sticky');
-      else header.classList.remove('is-sticky');
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
+  /* ── Smooth scroll anchor links ── */
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const target = document.getElementById(id);
+      if (!target) return;
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 
-  // Tour single tabs
-  var tabBtns = document.querySelectorAll('.tv-tour-tabs button');
-  if (tabBtns.length) {
-    tabBtns.forEach(function (btn) {
+  /* ── Accordion / FAQ ── */
+  document.querySelectorAll('.nt-accordion-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const item    = btn.closest('.nt-accordion-item');
+      const content = item ? item.querySelector('.nt-accordion-content') : null;
+      const isOpen  = item && item.classList.contains('is-open');
+
+      const parent = btn.closest('.nt-accordion');
+      if (parent) {
+        parent.querySelectorAll('.nt-accordion-item.is-open').forEach(function (other) {
+          other.classList.remove('is-open');
+          const c = other.querySelector('.nt-accordion-content');
+          if (c) c.style.maxHeight = '0';
+        });
+      }
+
+      if (!isOpen && item && content) {
+        item.classList.add('is-open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+    });
+  });
+
+  /* ── Tab panels (single page) ── */
+  document.querySelectorAll('.nt-tabs').forEach(function (tabs) {
+    const btns   = tabs.querySelectorAll('.nt-tab-btn');
+    const panels = document.querySelectorAll('.nt-tab-panel');
+
+    btns.forEach(function (btn, i) {
       btn.addEventListener('click', function () {
-        var name = btn.dataset.tab;
-        tabBtns.forEach(function (b) { b.classList.remove('is-active'); });
-        btn.classList.add('is-active');
-        document.querySelectorAll('.tv-tour-panel').forEach(function (p) {
-          p.classList.toggle('is-active', p.dataset.panel === name);
+        btns.forEach(function (b, j) {
+          b.classList.toggle('is-active', j === i);
+          b.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        });
+        panels.forEach(function (p, j) {
+          p.hidden = j !== i;
         });
       });
     });
-  }
 
-  // Animated counters
-  var nums = document.querySelectorAll('.tv-stat-num');
-  if (nums.length && 'IntersectionObserver' in window) {
-    var animate = function (el) {
-      var raw = el.textContent.trim();
-      var match = raw.match(/^(\d+(?:\.\d+)?)(.*)$/);
-      if (!match) return;
-      var target = parseFloat(match[1]);
-      var suffix = match[2];
-      var start = 0;
-      var duration = 1200;
-      var startTime = null;
-      function step(ts) {
-        if (!startTime) startTime = ts;
-        var p = Math.min((ts - startTime) / duration, 1);
-        var v = start + (target - start) * (1 - Math.pow(1 - p, 3));
-        el.textContent = (target >= 100 ? Math.round(v) : v.toFixed(1)) + suffix;
-        if (p < 1) requestAnimationFrame(step);
-      }
-      requestAnimationFrame(step);
-    };
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          animate(e.target);
-          io.unobserve(e.target);
+    if (btns.length) btns[0].click();
+  });
+
+  /* ── Review star picker ── */
+  document.querySelectorAll('.nt-review-stars').forEach(function (group) {
+    const stars = group.querySelectorAll('[data-star]');
+    const input = group.parentElement ? group.parentElement.querySelector('input[name]') : null;
+
+    stars.forEach(function (star, idx) {
+      star.addEventListener('mouseover', function () {
+        stars.forEach(function (s, j) {
+          s.setAttribute('fill', j <= idx ? 'var(--nt-yellow)' : 'none');
+        });
+      });
+      star.addEventListener('mouseleave', function () {
+        const val = input ? parseInt(input.value || '0', 10) : 0;
+        stars.forEach(function (s, j) {
+          s.setAttribute('fill', j < val ? 'var(--nt-yellow)' : 'none');
+        });
+      });
+      star.addEventListener('click', function () {
+        if (input) input.value = idx + 1;
+        stars.forEach(function (s, j) {
+          s.setAttribute('fill', j <= idx ? 'var(--nt-yellow)' : 'none');
+        });
+      });
+    });
+  });
+
+  /* ── Animated stat counters ── */
+  const statNums = document.querySelectorAll('[data-count]');
+  if (statNums.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        const el     = entry.target;
+        const target = parseFloat(el.getAttribute('data-count'));
+        const suffix = el.getAttribute('data-count-suffix') || '';
+        let start = 0;
+        const dur = 1800;
+        let startTime = null;
+        function step(ts) {
+          if (!startTime) startTime = ts;
+          const p = Math.min((ts - startTime) / dur, 1);
+          const v = target * (1 - Math.pow(1 - p, 3));
+          el.textContent = Math.round(v).toLocaleString() + suffix;
+          if (p < 1) requestAnimationFrame(step);
         }
+        requestAnimationFrame(step);
+        io.unobserve(el);
       });
     }, { threshold: 0.3 });
-    nums.forEach(function (n) { io.observe(n); });
+    statNums.forEach(function (n) { io.observe(n); });
   }
-})();
+});

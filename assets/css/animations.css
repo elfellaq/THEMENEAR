@@ -1,0 +1,122 @@
+/* ============================================================
+   NearTrips — Animations & Transitions
+   Pairs with GSAP ScrollTrigger via data-anim attributes
+   ============================================================ */
+
+/* ── Page transition ── */
+.nt-page-enter {
+  animation: ntFadeIn .4s ease forwards;
+}
+@keyframes ntFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Scroll-triggered reveals (GSAP sets these classes) ── */
+[data-anim] { opacity: 0; }
+[data-anim].is-animated { opacity: 1; }
+
+/* ── Hover micro-interactions ── */
+.nt-hover-lift { transition: transform var(--nt-transition-md), box-shadow var(--nt-transition-md); }
+.nt-hover-lift:hover { transform: translateY(-4px); box-shadow: var(--nt-shadow-lg); }
+
+.nt-hover-scale { transition: transform var(--nt-transition); }
+.nt-hover-scale:hover { transform: scale(1.04); }
+
+/* ── Image zoom on card hover (handled via CSS, not GSAP) ── */
+.nt-img-zoom {
+  overflow: hidden;
+  border-radius: inherit;
+}
+.nt-img-zoom img { transition: transform .55s cubic-bezier(.25,.46,.45,.94); }
+.nt-img-zoom:hover img { transform: scale(1.08); }
+
+/* ── Swiper custom ── */
+.swiper { overflow: hidden; }
+
+.nt-swiper-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--nt-bg);
+  border: 1.5px solid var(--nt-border);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--nt-navy);
+  cursor: pointer;
+  transition: all var(--nt-transition);
+  flex-shrink: 0;
+}
+.nt-swiper-btn:hover {
+  background: var(--nt-primary);
+  border-color: var(--nt-primary);
+  color: #fff;
+}
+.nt-swiper-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--nt-space-2);
+}
+
+/* Swiper pagination dots */
+.swiper-pagination-bullet {
+  background: var(--nt-border);
+  opacity: 1;
+  transition: all var(--nt-transition);
+}
+.swiper-pagination-bullet-active {
+  background: var(--nt-primary);
+  width: 24px;
+  border-radius: var(--nt-radius-full);
+}
+
+/* ── Loading spinner ── */
+.nt-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--nt-border);
+  border-top-color: var(--nt-primary);
+  border-radius: 50%;
+  animation: ntSpin .7s linear infinite;
+  margin-inline: auto;
+}
+@keyframes ntSpin { to { transform: rotate(360deg); } }
+
+/* ── Dropdown open/close ── */
+.nt-dropdown-menu {
+  transform-origin: top;
+  animation: ntDropIn .2s ease forwards;
+}
+@keyframes ntDropIn {
+  from { opacity: 0; transform: scaleY(.85) translateY(-8px); }
+  to   { opacity: 1; transform: scaleY(1)  translateY(0); }
+}
+
+/* ── Sticky header slide-in ── */
+@keyframes ntSlideDown {
+  from { transform: translateY(-100%); }
+  to   { transform: translateY(0); }
+}
+.nt-header--sticky-animate { animation: ntSlideDown .32s cubic-bezier(.4,0,.2,1); }
+
+/* ── Tab underline indicator ── */
+.nt-tab-indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background: var(--nt-primary);
+  border-radius: var(--nt-radius-full);
+  transition: left .3s cubic-bezier(.4,0,.2,1), width .3s cubic-bezier(.4,0,.2,1);
+}
+
+/* ── Reduced motion: respect user preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-anim] { opacity: 1; }
+}

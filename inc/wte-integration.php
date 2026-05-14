@@ -1,101 +1,72 @@
 <?php
 /**
- * WP Travel Engine integration hooks.
+ * WP Travel Engine integration — compatibility layer.
+ * Maps WTE 'trip' post type to NearTrips templates and meta.
  *
- * If the WP Travel Engine plugin is active, Travelio will defer to its
- * `trip` post type for booking-enabled tours. The theme's `tour_package`
- * CPT remains available as a lightweight alternative for sites that don't
- * need full booking/payment functionality.
- *
- * @package Travelio
+ * @package NearTrips
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-/**
- * Tell WP Travel Engine that this theme provides its own templates so the
- * plugin doesn't load its bundled (often unstyled) markup.
- */
-add_filter( 'wte_load_default_template', '__return_false' );
+/* ── Register destination taxonomy on WTE trips ── */
+add_action( 'init', 'nt_wte_register_taxonomy', 20 );
+function nt_wte_register_taxonomy() {
+    if ( ! nt_is_wte_active() ) { return; }
+    if ( ! taxonomy_exists( 'nt_destination' ) ) { return; }
+    register_taxonomy_for_object_type( 'nt_destination', 'trip' );
+}
 
-/**
- * Add body class when WTE is active.
- */
-add_filter( 'body_class', function( $classes ) {
-    if ( class_exists( 'Wp_Travel_Engine' ) || class_exists( 'WPTrip_Summary' ) ) {
-        $classes[] = 'has-wte';
+/* ── Map WTE trip price to NearTrips meta key ── */
+add_filter( 'nt_tour_price', 'nt_wte_price', 10, 2 );
+function nt_wte_price( $price, $post_id ) {
+    if ( ! nt_is_wte_active() ) { return $price; }
+    $settings = get_post_meta( $post_id, 'wp_travel_engine_setting', true );
+    if ( isset( $settings['trip_price'] ) && (float) $settings['trip_price'] > 0 ) {
+        return (float) $settings['trip_price'];
+    }
+    return $price;
+}
+
+/* ── Use NearTrips single template for 'trip' post type ── */
+add_filter( 'single_template', 'nt_wte_single_template' );
+function nt_wte_single_template( $template ) {
+    if ( is_singular( 'trip' ) ) {
+        $custom = NT_DIR . '/single-nt_tour.php';
+        if ( file_exists( $custom ) ) { return $custom; }
+    }
+    return $template;
+}
+
+/* ── Use NearTrips archive for 'trip' archive ── */
+add_filter( 'archive_template', 'nt_wte_archive_template' );
+function nt_wte_archive_template( $template ) {
+    if ( is_post_type_archive( 'trip' ) ) {
+        $custom = NT_DIR . '/archive-nt_tour.php';
+        if ( file_exists( $custom ) ) { return $custom; }
+    }
+    return $template;
+}
+
+/* ── Body class helper ── */
+add_filter( 'body_class', 'nt_wte_body_class' );
+function nt_wte_body_class( $classes ) {
+    if ( is_singular( 'trip' ) || is_post_type_archive( 'trip' ) ) {
+        $classes[] = 'nt-is-wte';
     }
     return $classes;
-} );
+}
 
-/**
- * Convenience: if a Travelio "tour_package" CPT has a matching WTE trip
- * (by title), redirect single-tour_package to the WTE trip permalink.
- * This lets editors who switch to WTE seamlessly use the same theme.
- */
-add_action( 'template_redirect', function() {
-    if ( ! is_singular( 'tour_package' ) || ! post_type_exists( 'trip' ) ) { return; }
-    $match = get_page_by_title( get_the_title(), OBJECT, 'trip' );
-    if ( $match && 'publish' === $match->post_status ) {
-        wp_safe_redirect( get_permalink( $match->ID ), 301 );
-        exit;
+/* ── Expose WTE meta to REST ── */
+add_action( 'rest_api_init', 'nt_wte_rest_meta' );
+function nt_wte_rest_meta() {
+    if ( ! nt_is_wte_active() ) { return; }
+    $keys = [ 'wp_travel_engine_setting', 'wp_travel_engine_itinerary_setting', 'wp_travel_engine_faq_setting' ];
+    foreach ( $keys as $key ) {
+        register_post_meta( 'trip', $key, [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'object',
+            'auth_callback' => '__return_true',
+        ] );
     }
-} );
-
-/**
- * Register destination taxonomy for WTE trips
- */
-add_action( 'init', function() {
-    if ( ! post_type_exists( 'trip' ) ) { return; }
-    
-    register_taxonomy( 'destination', 'trip', array(
-        'label'        => __( 'Destinations', 'travelio' ),
-        'public'       => true,
-        'hierarchical' => true,
-        'show_in_rest' => true,
-        'rewrite'      => array( 'slug' => 'destination' ),
-    ) );
-} );
-
-/**
- * Add meta fields support for demo importer compatibility
- */
-add_action( 'init', function() {
-    if ( ! post_type_exists( 'trip' ) ) { return; }
-    
-    // Register meta fields for WTE trips
-    register_meta( 'post', 'wpte_trip_duration', array(
-        'type'              => 'string',
-        'single'            => true,
-        'sanitize_callback' => 'sanitize_text_field',
-        'show_in_rest'      => true,
-    ) );
-    
-    register_meta( 'post', 'wpte_trip_price', array(
-        'type'              => 'string',
-        'single'            => true,
-        'sanitize_callback' => 'sanitize_text_field',
-        'show_in_rest'      => true,
-    ) );
-    
-    register_meta( 'post', 'wpte_trip_original_price', array(
-        'type'              => 'string',
-        'single'            => true,
-        'sanitize_callback' => 'sanitize_text_field',
-        'show_in_rest'      => true,
-    ) );
-    
-    register_meta( 'post', 'wpte_trip_availability', array(
-        'type'              => 'string',
-        'single'            => true,
-        'sanitize_callback' => 'sanitize_text_field',
-        'show_in_rest'      => true,
-    ) );
-    
-    register_meta( 'post', 'wpte_trip_gallery', array(
-        'type'              => 'array',
-        'single'            => true,
-        'sanitize_callback' => 'wp_sanitize_array',
-        'show_in_rest'      => true,
-    ) );
-} );
+}
